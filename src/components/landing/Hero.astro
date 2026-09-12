@@ -1,0 +1,26 @@
+---
+import { Image } from "astro:assets";
+import heroImg from "../../assets/hero.jpg";
+---
+
+<section id="inicio" class="relative w-full min-h-[600px] h-[85vh] flex items-center justify-center bg-black overflow-hidden">
+  <Image src={heroImg} alt="Mesa de restaurante peruano" class="absolute inset-0 w-full h-full object-cover" widths={[960, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
+  <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-black/90 via-black/75 to-black/90 z-0"></div>
+
+  <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto w-full">
+    <h1 class="text-section font-medium text-white leading-tight mb-4 uppercase">
+      Fogonería, el lugar donde cocinamos tu negocio
+    </h1>
+    <p class="text-sm text-white/70 mb-8 leading-relaxed max-w-xl mx-auto">
+      Nosotros creamos, alojamos y mantenemos tu sitio web y carta digital mientras tú te enfocas en cocinar.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-3">
+      <a href="#pricing" class="bg-surface text-ink-900 rounded-full px-5 h-10 inline-flex items-center justify-center text-sm font-medium hover:bg-surface/90 transition-all">
+        Ver planes
+      </a>
+      <a href="#pricing" class="bg-surface/10 hover:bg-surface/20 text-white border border-white/20 backdrop-blur-sm rounded-full px-5 h-10 inline-flex items-center justify-center text-sm font-medium transition-all">
+        Empezar ahora
+      </a>
+    </div>
+  </div>
+</section>

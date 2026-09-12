@@ -1,0 +1,80 @@
+---
+import Button from "../ui/Button.astro";
+import Card from "../ui/Card.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+import { ORIGIN_URLS } from "../../lib/site";
+
+interface Plan {
+  name: string;
+  price: string;
+  suffix: string;
+  note?: string;
+  features: string[];
+  cta: string;
+  featured?: boolean;
+}
+
+const plans: Plan[] = [
+  {
+    name: "Básico",
+    price: "$30 - $40",
+    suffix: "/ mes",
+    note: "(Sin Landing)",
+    features: ["Carta Digital en Subdominio", "Código QR"],
+    cta: "Elegir Básico",
+  },
+  {
+    name: "Profesional",
+    price: "$65 - $80",
+    suffix: "/ mes",
+    features: [
+      "Landing Page Completa",
+      "Dominio Propio",
+      "Carta Digital QR",
+      "Gestión de contenido por nuestro equipo",
+    ],
+    cta: "Elegir Profesional",
+    featured: true,
+  },
+  {
+    name: "Añadidos",
+    price: "+ $25",
+    suffix: "/ módulo",
+    features: ["Funcionalidades extras a medida"],
+    cta: "Personalizar",
+  },
+];
+---
+
+<section id="pricing" class="bg-surface py-16 border-t border-ink-900/[0.06]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionHeader title="Planes claros, sin sorpresas" />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+      {plans.map((plan) => (
+        <Card class={`flex flex-col relative ${plan.featured ? "border-2 border-ink-900 md:scale-[1.03] z-10" : ""}`}>
+          {plan.featured ? (
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white px-3 py-1 rounded-full text-xs font-medium uppercase whitespace-nowrap">
+              Producto Estrella
+            </span>
+          ) : null}
+          <h3 class="text-sm font-medium text-ink-900 mb-1">{plan.name}</h3>
+          <p class="text-section font-medium text-ink-900 mb-1">
+            {plan.price} <span class="text-nav font-normal text-ink-400">{plan.suffix}</span>
+          </p>
+          {plan.note ? <p class="text-xs text-ink-400 mb-4">{plan.note}</p> : <div class="mb-4" />}
+          <ul class="space-y-2 mb-6 flex-1">
+            {plan.features.map((f) => (
+              <li class="flex items-start gap-2 text-sm text-ink-600">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink-900 shrink-0" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <Button href={ORIGIN_URLS.onboarding} variant={plan.featured ? "primary" : "secondary"} class={`w-full ${plan.featured ? "" : "border-ink-900/20 hover:border-ink-900"}`}>
+            {plan.cta}
+          </Button>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>

@@ -5,20 +5,40 @@ dist/
 
 # dependencies
 node_modules/
+.pnp
+.pnp.js
+.pnpm-store/
 
 # logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
+pnpm-error.log*
+*.log
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
 
-# macOS-specific files
+# testing / coverage
+coverage/
+
+# typescript
+*.tsbuildinfo
+
+# turbo / deploy caches
+.turbo/
+.vercel/
+.netlify/
+
+# macOS / Windows
 .DS_Store
+Thumbs.db
 
-# jetbrains setting folder
+# editors (solo personal, .vscode se comparte en equipo)
 .idea/
+
+# misc
+*.pem

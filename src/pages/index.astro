@@ -1,17 +1,24 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import Hero from "../components/landing/Hero.astro";
+import Portfolio from "../components/landing/Portfolio.astro";
+import HowItWorks from "../components/landing/HowItWorks.astro";
+import Testimonials from "../components/landing/Testimonials.astro";
+import Pricing from "../components/landing/Pricing.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <main class="bg-surface min-h-screen w-full">
+    <Navbar />
+    <div class="pt-16">
+      <Hero />
+      <Portfolio />
+      <HowItWorks />
+      <Testimonials />
+      <Pricing />
+    </div>
+    <Footer />
+  </main>
+</BaseLayout>

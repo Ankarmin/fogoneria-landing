@@ -1,0 +1,38 @@
+---
+import "../styles/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Fogonería — El lugar donde cocinamos tu negocio",
+  description = "Creamos, alojamos y mantenemos tu sitio web y carta digital mientras tú te enfocas en cocinar.",
+} = Astro.props;
+
+const themeScript = `(function(){try{var t=localStorage.getItem('fogoneria:theme');if(t==='dark'){document.documentElement.classList.add('dark')}else if(t==='light'){document.documentElement.classList.remove('dark')}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark')}}catch(e){}})();`;
+---
+
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <script is:inline set:html={themeScript} />
+  </head>
+  <body class="min-h-full flex flex-col">
+    <slot />
+  </body>
+</html>
