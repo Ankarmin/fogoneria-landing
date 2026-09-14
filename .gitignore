@@ -8,6 +8,7 @@ node_modules/
 .pnp
 .pnp.js
 .pnpm-store/
+AGENT.md
 
 # logs
 npm-debug.log*
