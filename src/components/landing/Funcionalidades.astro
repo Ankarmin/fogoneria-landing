@@ -1,0 +1,54 @@
+---
+import SectionHeader from "../ui/SectionHeader.astro";
+import DeviceMockup from "../ui/DeviceMockup.astro";
+import { funcionalidades } from "../../lib/landing";
+---
+
+<section id="funcionalidades" class="py-16 sm:py-24 bg-gradient-to-b from-surface via-primary/[0.12] to-primary/[0.08] dark:from-black dark:via-black dark:to-persimmon-950/80 relative overflow-hidden scroll-mt-16">
+  {/* Esquinas visor — solo desktop */}
+  <div class="absolute inset-4 sm:inset-6 z-10 hidden md:block pointer-events-none" aria-hidden="true">
+    <span class="absolute top-0 left-0 w-6 h-6 border-t border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute top-0 right-0 w-6 h-6 border-t border-r border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-ink-900/20 dark:border-white/30"></span>
+  </div>
+
+  <div class="absolute top-1/4 -left-24 w-[32rem] h-[32rem] max-w-none bg-persimmon-300/30 dark:bg-transparent blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <SectionHeader
+      display
+      title="Todo tu restaurante en un solo sistema"
+      description="Seis módulos que trabajan juntos para que nada se te escape: del pedido al cierre."
+    />
+
+    <div class="flex flex-col gap-12 sm:gap-16 lg:gap-20">
+      {funcionalidades.map((f, i) => (
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div class={i % 2 === 1 ? "lg:order-2" : "lg:order-1"}>
+            <DeviceMockup badge={f.badge} phone={f.phone} />
+          </div>
+          <div class={`min-w-0 ${i % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
+            <h3 class="font-display uppercase text-display-sm leading-display tracking-display text-ink-900 dark:text-white text-balance break-words mb-4">
+              {f.title}
+            </h3>
+            <p class="text-sm leading-relaxed text-ink-600 dark:text-white/70 mb-6">{f.desc}</p>
+            <ul class="flex flex-col gap-3 mb-6">
+              {f.checks.map((c) => (
+                <li class="flex items-start gap-3">
+                  <span class="w-6 h-6 shrink-0 rounded-full bg-primary text-white flex items-center justify-center" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                  </span>
+                  <span class="text-sm text-ink-900 dark:text-white leading-relaxed">{c}</span>
+                </li>
+              ))}
+            </ul>
+            <a href="#cotizaciones" class="bg-primary text-white rounded-full px-5 h-10 inline-flex items-center gap-1 text-sm font-medium hover:bg-primary-hover transition-colors">
+              Cotizar este módulo →
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,85 @@
+---
+import SectionHeader from "../ui/SectionHeader.astro";
+
+const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 bg-white dark:bg-white/5 px-4 text-sm text-ink-900 dark:text-white placeholder:text-ink-400 dark:placeholder:text-white/40 focus:border-primary focus:outline-none w-full transition-colors";
+---
+
+<section id="cotizaciones" class="py-16 sm:py-24 bg-gradient-to-b from-primary/[0.14] via-primary/[0.12] to-surface dark:from-black dark:via-black dark:to-persimmon-950/60 relative overflow-hidden scroll-mt-16">
+  <div class="absolute inset-4 sm:inset-6 z-10 hidden md:block pointer-events-none" aria-hidden="true">
+    <span class="absolute top-0 left-0 w-6 h-6 border-t border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute top-0 right-0 w-6 h-6 border-t border-r border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-ink-900/20 dark:border-white/30"></span>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+    <div class="min-w-0">
+      <SectionHeader
+        align="left"
+        display
+        title="Cotiza tu sistema"
+        description="Cuéntanos de tu restaurante y te armamos una propuesta a medida: módulos, sucursales y puesta en marcha."
+      />
+    </div>
+
+    <div class="bg-white dark:bg-white/[0.06] rounded-2xl border border-primary/40 dark:border-white/15 p-4 sm:p-6 min-w-0">
+      <form id="cotizacion-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4" novalidate={false}>
+        <div class="flex flex-col gap-2">
+          <label for="cot-nombre" class="text-sm font-medium text-ink-900 dark:text-white">Nombre*</label>
+          <input id="cot-nombre" name="nombre" type="text" required placeholder="Ingresa tu nombre" class={inputCls} autocomplete="given-name" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="cot-apellido" class="text-sm font-medium text-ink-900 dark:text-white">Apellido*</label>
+          <input id="cot-apellido" name="apellido" type="text" required placeholder="Ingresa tu apellido" class={inputCls} autocomplete="family-name" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="cot-telefono" class="text-sm font-medium text-ink-900 dark:text-white">Teléfono de contacto*</label>
+          <input id="cot-telefono" name="telefono" type="tel" required placeholder="+51 911 234 567" class={inputCls} autocomplete="tel" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="cot-email" class="text-sm font-medium text-ink-900 dark:text-white">Email*</label>
+          <input id="cot-email" name="email" type="email" required placeholder="Ingresa tu correo" class={inputCls} autocomplete="email" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="cot-negocio" class="text-sm font-medium text-ink-900 dark:text-white">Nombre del negocio*</label>
+          <input id="cot-negocio" name="negocio" type="text" required placeholder="Ingresa el nombre de tu restaurante" class={inputCls} autocomplete="organization" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="cot-sucursales" class="text-sm font-medium text-ink-900 dark:text-white">Cantidad de sucursales*</label>
+          <select id="cot-sucursales" name="sucursales" required class={inputCls}>
+            <option value="" disabled selected>Selecciona una cantidad</option>
+            <option value="1">1 local</option>
+            <option value="2-3">2 a 3 locales</option>
+            <option value="4+">4 o más locales</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2 flex flex-col gap-3 mt-2">
+          <button type="submit" class="bg-primary text-white hover:bg-primary-hover rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
+            Solicitar cotización
+          </button>
+          <p class="text-xs text-ink-400 dark:text-white/40 text-center">Sin compromiso. Te contactamos en menos de 24 horas.</p>
+        </div>
+      </form>
+      <div id="cotizacion-exito" class="hidden text-center py-8" aria-live="polite">
+        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        </div>
+        <p class="text-sm font-medium text-ink-900 dark:text-white mb-2">¡Gracias! Te contactaremos en menos de 24 horas.</p>
+        <p class="text-nav text-ink-600 dark:text-white/60">Recibimos los datos de tu restaurante y ya estamos armando tu propuesta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("cotizacion-form");
+  const exito = document.getElementById("cotizacion-exito");
+  if (form && exito) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      form.classList.add("hidden");
+      exito.classList.remove("hidden");
+    });
+  }
+</script>

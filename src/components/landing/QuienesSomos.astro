@@ -1,0 +1,62 @@
+---
+import SectionHeader from "../ui/SectionHeader.astro";
+
+const features = [
+  {
+    title: "Pedidos en tiempo real",
+    description: "Del salón a cocina sin gritos ni papeles perdidos.",
+    icon: "M13 10V3L4 14h7v7l9-11h-7z",
+  },
+  {
+    title: "Cocina conectada",
+    description: "Pantalla de cocina con comandas ordenadas por prioridad.",
+    icon: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z",
+  },
+  {
+    title: "Inventario sin fugas",
+    description: "Stock e insumos controlados para frenar las mermas.",
+    icon: "M21 8l-9-5-9 5v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8",
+  },
+  {
+    title: "Caja y cierres claros",
+    description: "Turnos y cierres de caja que cuadran al primer intento.",
+    icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z",
+  },
+  {
+    title: "Reportes que se entienden",
+    description: "Ventas y platos top a la vista, sin hojas de cálculo.",
+    icon: "M3 3v16a2 2 0 0 0 2 2h16M7 14l4-4 3 3 5-6",
+  },
+];
+---
+
+<section id="quienes-somos" class="py-16 sm:py-24 lg:py-20 bg-gradient-to-b from-persimmon-100/60 via-surface to-surface dark:from-persimmon-950/60 dark:via-persimmon-950/70 dark:to-black relative overflow-hidden scroll-mt-16">
+  <div class="absolute inset-4 sm:inset-6 z-10 hidden md:block pointer-events-none" aria-hidden="true">
+    <span class="absolute top-0 left-0 w-6 h-6 border-t border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute top-0 right-0 w-6 h-6 border-t border-r border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-ink-900/20 dark:border-white/30"></span>
+  </div>
+
+  <div class="absolute -top-16 right-0 w-[30rem] h-[30rem] max-w-none bg-persimmon-200/50 dark:bg-transparent blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <SectionHeader
+      display
+      title="Cocineros del orden detrás del fuego"
+      description="Somos Fogonería, un equipo peruano que une gastronomía y tecnología. Vivimos el ritmo de un restaurante en hora punta y construimos el sistema que nos hubiera gustado tener: simple, rápido y en español."
+    />
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 sm:gap-5">
+      {features.map((f, i) => (
+        <div class={`bg-white dark:bg-white/[0.06] border border-ink-900/15 dark:border-white/15 border-t-4 border-t-primary dark:border-t-white/15 hover:border-primary/30 dark:hover:border-white/25 rounded-2xl p-4 sm:p-5 shadow-sm transition-all duration-300 h-full flex flex-col lg:col-span-2 ${i === 3 ? "lg:col-start-2" : ""}`}>
+          <div class="w-10 h-10 bg-primary text-white dark:bg-white dark:text-black rounded-xl flex items-center justify-center mb-4">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d={f.icon} /></svg>
+          </div>
+          <h4 class="text-sm font-medium text-ink-900 dark:text-white mb-2">{f.title}</h4>
+          <p class="text-nav text-ink-600 dark:text-white/60 leading-relaxed flex-1">{f.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

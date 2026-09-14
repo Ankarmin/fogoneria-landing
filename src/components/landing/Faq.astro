@@ -1,0 +1,62 @@
+---
+import SectionHeader from "../ui/SectionHeader.astro";
+
+const items = [
+  {
+    q: "¿Qué es Fogonería?",
+    a: "Un Business Management System para restaurantes: pedidos, cocina, inventario, caja y reportes en una sola plataforma.",
+  },
+  {
+    q: "¿Necesito equipos especiales?",
+    a: "No. Funciona en los equipos que ya tienes —PC, tablet o celular— con conexión a internet.",
+  },
+  {
+    q: "¿Cuánto demora la puesta en marcha?",
+    a: "La mayoría de restaurantes opera en la primera semana, con acompañamiento de nuestro equipo.",
+  },
+  {
+    q: "¿Funciona con varias sucursales?",
+    a: "Sí. Controla locales, stocks y cierres por sucursal desde un solo panel.",
+  },
+  {
+    q: "¿Mis datos están seguros?",
+    a: "Sí. Copias de seguridad automáticas y accesos por roles para tu equipo.",
+  },
+  {
+    q: "¿La cotización tiene algún costo?",
+    a: "No. Completa el formulario y te contactamos en menos de 24 horas, sin compromiso.",
+  },
+];
+---
+
+<section id="faq" class="py-16 sm:py-24 bg-gradient-to-b from-surface via-surface to-primary/[0.16] dark:from-persimmon-950/60 dark:via-persimmon-950/60 dark:to-black relative overflow-hidden scroll-mt-16">
+  <div class="absolute inset-4 sm:inset-6 z-10 hidden md:block pointer-events-none" aria-hidden="true">
+    <span class="absolute top-0 left-0 w-6 h-6 border-t border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute top-0 right-0 w-6 h-6 border-t border-r border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-ink-900/20 dark:border-white/30"></span>
+    <span class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-ink-900/20 dark:border-white/30"></span>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+    <div class="min-w-0">
+      <SectionHeader
+        align="left"
+        display
+        title="Preguntas frecuentes"
+        description="Lo que los dueños de restaurantes en Perú nos preguntan antes de ordenar su casa con Fogonería."
+      />
+    </div>
+
+    <div class="min-w-0">
+      {items.map((item, i) => (
+        <details class={`group border-t border-ink-900/10 dark:border-white/10 hover:border-primary/50 open:border-primary/60 open:bg-primary/[0.04] py-4 ${i === items.length - 1 ? "border-b" : ""}`}>
+          <summary class="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+            <span class="text-sm font-medium text-ink-900 dark:text-white">{item.q}</span>
+            <span class="w-8 h-8 shrink-0 rounded-full bg-primary text-white flex items-center justify-center text-lg leading-none transition-transform duration-200 group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-ink-600 dark:text-white/70 pr-12">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

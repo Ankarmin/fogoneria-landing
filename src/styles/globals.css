@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
+@import "@fontsource/oswald/600.css";
+@import "@fontsource/oswald/700.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -36,6 +38,18 @@
   --text-nav: 13px;
   --text-sm: 14px;
   --text-section: 24px;
+
+  /* Display Hero cinematico en Oswald condensada (excepcion aislada: solo
+     display Hero/secciones, el resto sigue en 12/13/14/24).
+     Oswald es mas angosta que Inter: tope alto (5.75rem) y curva viva (6vw)
+     para que las 3 lineas del H1 ("FOGONERIA, EL SISTEMA" la mas larga)
+     sigan componiendo en desktop dentro de max-w-5xl sin partirse. */
+  --text-display: clamp(2.5rem, 0.75rem + 6vw, 5.75rem);
+  --text-display-sm: clamp(1.75rem, 4vw + 1rem, 3.5rem);
+  /* Wordmark gigante footer: escala fluida con vw, sin scroll horizontal */
+  --text-wordmark: clamp(2.75rem, 11vw + 1rem, 10rem);
+  --leading-display: 0.92;
+  --tracking-display: 0.015em;
 }
 
 :root {
@@ -64,6 +78,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Anclas bajo nav fixed de 64px (h-16): sin solape al navegar */
+section[id] {
+  scroll-margin-top: 4rem;
+}
+
 body {
   background: var(--c-bg);
   color: var(--c-strong);
@@ -73,6 +92,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-synthesis: none;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -80,9 +100,16 @@ body {
   color: #fffdf9;
 }
 
-/* Solo regular (400) y medium (500) */
+/* Solo regular (400) y medium (500) — excepto .font-display (Oswald 600),
+   reservado a titulares display Hero/secciones */
 .font-medium {
   font-weight: 500;
+}
+
+.font-display {
+  font-family: "Oswald", "Inter Variable", Inter, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.015em;
 }
 
 @keyframes fadeIn {
@@ -121,6 +148,53 @@ body {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Zoom cinematográfico lento del Hero */
+@keyframes heroZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.animate-hero-zoom {
+  animation: heroZoom 24s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-zoom {
+    animation: none;
+  }
+}
+
+/* Scrollbar de página estilo marca (thumb persimmon, track transparente) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-primary) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--c-primary);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--c-primary-hover);
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 /* Oculta scrollbar manteniendo scroll */

@@ -2,7 +2,7 @@
 dist/
 # generated types
 .astro/
-
+opencode.json
 # dependencies
 node_modules/
 .pnp

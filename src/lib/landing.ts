@@ -1,39 +1,79 @@
-import demoCriolla from "../assets/demo-criolla.jpg";
-import demoPostres from "../assets/demo-postres.jpg";
-import demoCafe from "../assets/demo-cafe.jpg";
 import review1 from "../assets/review-1.jpg";
 import review2 from "../assets/review-2.jpg";
 import review3 from "../assets/review-3.jpg";
 import review4 from "../assets/review-4.jpg";
-import { ORIGIN_URLS } from "./site";
 
-export const demos = [
+export const heroHud = {
+  location: "Lima / PE",
+};
+
+export const funcionalidades = [
   {
-    id: 1,
-    title: "Sentimiento Peruano",
-    category: "Restaurante de comida criolla",
-    image: demoCriolla,
-    alt: "Demo de Sentimiento Peruano",
-    tags: ["Reservas", "Carta QR"],
-    link: ORIGIN_URLS.demo("criolla"),
+    id: "pedidos",
+    badge: "Pedido recibido · hace 3s",
+    title: "Pedidos y cocina en tiempo real",
+    desc: "Del salón a la cocina sin gritos ni papeles: el mesero manda la comanda y cocina la ve al instante, con estados que todos entienden.",
+    checks: [
+      "Comandas del mesero directo a cocina",
+      "Estados en vivo: pendiente, en preparación, listo",
+      "Pantalla de cocina (KDS) por prioridad",
+    ],
   },
   {
-    id: 2,
-    title: "Tu postre a la limeña",
-    category: "Repostería artesanal",
-    image: demoPostres,
-    alt: "Demo de Tu postre a la limeña",
-    tags: ["Catálogo", "Pedidos"],
-    link: ORIGIN_URLS.demo("postres"),
+    id: "carta",
+    badge: "Carta actualizada · hace 1 min",
+    title: "Platos, combos y promociones",
+    desc: "Arma tu carta una vez y véndela por todos lados: platos con modificadores, combos y promos que se actualizan solas.",
+    checks: [
+      "Platos, categorías y modificadores",
+      "Combos y promociones programadas",
+      "Cambios de precio en segundos",
+    ],
   },
   {
-    id: 3,
-    title: "Café Express",
-    category: "Cafetería y desayunos",
-    image: demoCafe,
-    alt: "Demo de Café Express",
-    tags: ["Menú Digital", "Delivery"],
-    link: ORIGIN_URLS.demo("cafe"),
+    id: "inventario",
+    badge: "Stock actualizado · hace 2s",
+    phone: true,
+    title: "Inventario que se actualiza solo",
+    desc: "Cada plato vendido descuenta sus insumos automáticamente. Te avisamos antes de que algo se agote.",
+    checks: [
+      "Descuento automático según receta",
+      "Alertas de stock bajo",
+      "Costo real de cada plato",
+    ],
+  },
+  {
+    id: "caja",
+    badge: "Caja cuadrada · turno noche",
+    title: "Caja, gastos y clientes",
+    desc: "Cierres que cuadran, gastos bajo control y clientes que vuelven: la plata clara, todos los días.",
+    checks: [
+      "Cierres de caja por turno y sucursal",
+      "Registro de gastos al día",
+      "Base de clientes frecuentes",
+    ],
+  },
+  {
+    id: "asistencia",
+    badge: "Asistencia registrada · 8:00 a. m.",
+    title: "Asistencia del equipo",
+    desc: "Olvídate del cuaderno: turnos, tardanzas y horas extras registrados solos, listos para planilla.",
+    checks: [
+      "Marcación de ingreso y salida",
+      "Turnos y horarios por sucursal",
+      "Reporte listo para planilla",
+    ],
+  },
+  {
+    id: "roles",
+    badge: "Rol asignado · Mesero",
+    title: "Roles y permisos",
+    desc: "Cada puesto ve solo lo que le toca: tú creas los roles de Admin, Cocina y Mesero, y el sistema hace el resto.",
+    checks: [
+      "Roles de Admin, Cocina y Mesero",
+      "Permisos limitados por sucursal",
+      "Movimientos auditados por usuario",
+    ],
   },
 ];
 
@@ -45,7 +85,7 @@ export const reviews = [
     image: review1,
     alt: "Foto de Carlos Mendoza",
     quote:
-      "Antes perdíamos mucho tiempo enviando el menú por WhatsApp en PDF. Ahora los clientes escanean el QR en la mesa y piden directo. Fogoneria nos salvó la temporada.",
+      "Antes cerrábamos caja con cuaderno y calculadora hasta la medianoche. Ahora los pedidos caen directo a cocina y el cierre sale solo. Fogonería nos ordenó la casa.",
     rating: 5,
   },
   {
@@ -55,7 +95,7 @@ export const reviews = [
     image: review2,
     alt: "Foto de Sofía Arévalo",
     quote:
-      "No sé nada de programación, pero configurar mi carta me tomó literalmente 15 minutos. El diseño es hermoso y el soporte es súper rápido.",
+      "No sé nada de sistemas, pero en una tarde ya tomábamos pedidos con Fogonería. El equipo nos acompañó en cada paso.",
     rating: 5,
   },
   {
@@ -65,7 +105,7 @@ export const reviews = [
     image: review3,
     alt: "Foto de Martín Cárdenas",
     quote:
-      "Dudaba si pagar una mensualidad valía la pena, pero la imagen profesional que da tener mi propio dominio (.com) ha hecho que mis pedidos a domicilio aumenten un 30%.",
+      "Las mermas bajaron desde el primer mes porque por fin vemos qué sale y qué se pierde. La inversión se pagó sola.",
     rating: 5,
   },
   {
@@ -75,7 +115,7 @@ export const reviews = [
     image: review4,
     alt: "Foto de Lucía Fernández",
     quote:
-      "Tener el control total para cambiar precios o esconder platos que se agotaron en tiempo real desde mi celular es increíble. 100% recomendado.",
+      "Con dos locales, necesitaba ver todo sin estar en todo. Desde mi celular reviso ventas, stock y cierres en tiempo real.",
     rating: 5,
   },
 ];

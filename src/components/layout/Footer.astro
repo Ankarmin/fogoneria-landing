@@ -1,44 +1,51 @@
 ---
 import { ORIGIN_URLS } from "../../lib/site";
+import { heroHud } from "../../lib/landing";
 ---
 
-<footer class="bg-persimmon-950 text-white pt-12 pb-8">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+<footer id="contacto" class="bg-gradient-to-b from-primary/[0.16] via-primary/[0.14] to-primary/[0.24] dark:from-black dark:via-persimmon-950/50 dark:to-black text-ink-900 dark:text-white pt-12 pb-8 relative overflow-hidden">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-8 mb-12">
       <div class="flex flex-col gap-4">
         <div class="flex items-center gap-2">
-          <span class="w-8 h-8 rounded-xl bg-surface text-ink-900 flex items-center justify-center">
+          <span class="w-8 h-8 rounded-xl bg-ink-900 text-surface dark:bg-surface dark:text-ink-900 flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
           </span>
-          <span class="text-sm font-medium text-white">Fogonería</span>
+          <span class="text-sm font-medium text-ink-900 dark:text-white">Fogonería</span>
         </div>
-        <p class="text-sm leading-relaxed text-white/60">
-          Fogonería, el lugar donde cocinamos tu negocio.
+        <p class="text-sm leading-relaxed text-ink-600 dark:text-white/60">
+          Fogonería, el sistema donde cocinamos tu negocio.
         </p>
       </div>
 
       <div>
-        <h3 class="text-white font-medium mb-4 uppercase text-xs">Plataforma</h3>
-        <ul class="flex flex-col gap-2 text-nav text-white/60">
-          <li><a href="#inicio" class="hover:text-white transition-colors px-0 py-2">Inicio</a></li>
-          <li><a href="#demos" class="hover:text-white transition-colors px-0 py-2">Ver Demos</a></li>
-          <li><a href="#how-it-works" class="hover:text-white transition-colors px-0 py-2">Cómo funciona</a></li>
-          <li><a href="#pricing" class="hover:text-white transition-colors px-0 py-2">Precios y Planes</a></li>
+        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Plataforma</h3>
+        <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
+          <li><a href="#inicio" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Inicio</a></li>
+          <li><a href="#quienes-somos" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Quiénes Somos</a></li>
+          <li><a href="#funcionalidades" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Funcionalidades</a></li>
+          <li><a href="#reviews" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Reseñas</a></li>
+          <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Cotizaciones</a></li>
+          <li><a href="#faq" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">FAQ</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-white font-medium mb-4 uppercase text-xs">Soporte</h3>
-        <ul class="flex flex-col gap-2 text-nav text-white/60">
-          <li><a href="#" class="hover:text-white transition-colors">Centro de Ayuda</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">Tutoriales</a></li>
+        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Soporte</h3>
+        <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
+          <li><a href="#" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Centro de Ayuda</a></li>
+          <li><a href="#faq" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Preguntas Frecuentes</a></li>
+          <li><a href="#" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Tutoriales</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-white font-medium mb-4 uppercase text-xs">Comunícate</h3>
-        <ul class="flex flex-col gap-3 text-sm text-white/60">
+        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Comunícate</h3>
+        <p class="text-xs font-medium uppercase tracking-widest text-ink-400 dark:text-white/50 mb-3 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden="true"></span>
+          {heroHud.location}
+        </p>
+        <ul class="flex flex-col gap-3 text-sm text-ink-600 dark:text-white/60">
           <li class="flex items-start gap-2">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="shrink-0 mt-0.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             <span>hola@fogoneria.com</span>
@@ -55,10 +62,10 @@ import { ORIGIN_URLS } from "../../lib/site";
       </div>
     </div>
 
-    <div class="pt-6 border-t border-white/10 flex flex-col-reverse md:flex-row justify-between items-center gap-4">
-      <div class="text-xs text-white/40 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
+    <div class="pt-6 border-t border-ink-900/10 dark:border-white/10 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+      <div class="text-xs text-ink-400 dark:text-white/40 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
         <span>© 2026 Fogonería. Todos los derechos reservados.</span>
-        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener" class="hover:text-white transition-colors">
+        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener" class="hover:text-ink-900 dark:hover:text-white transition-colors">
           Políticas, términos y condiciones
         </a>
       </div>

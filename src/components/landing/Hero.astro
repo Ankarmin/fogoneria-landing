@@ -1,25 +1,46 @@
 ---
 import { Image } from "astro:assets";
-import heroImg from "../../assets/hero.jpg";
+import heroImg from "../../assets/hero-fogoneria.png";
+import { heroHud } from "../../lib/landing";
 ---
 
-<section id="inicio" class="relative w-full min-h-[600px] h-[85vh] flex items-center justify-center bg-black overflow-hidden">
-  <Image src={heroImg} alt="Mesa de restaurante peruano" class="absolute inset-0 w-full h-full object-cover" widths={[960, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
-  <div class="absolute inset-0 w-full h-full bg-gradient-to-b from-black/90 via-black/75 to-black/90 z-0"></div>
+<section id="inicio" class="relative w-full min-h-[calc(100svh-4rem)] flex items-center bg-gradient-to-b from-surface via-surface to-persimmon-100/60 dark:from-black dark:via-black dark:to-persimmon-950/60 overflow-hidden scroll-mt-16">
+  <Image src={heroImg} alt="Salón de restaurante Fogonería de noche" class="absolute inset-0 w-full h-full object-cover animate-hero-zoom" widths={[960, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
+  <div class="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent dark:from-black/90 dark:via-black/45 dark:to-black/5" aria-hidden="true"></div>
+  <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-surface/55 via-surface/15 to-transparent dark:from-black/85 dark:via-black/20 dark:to-transparent" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_40%,transparent_60%,color-mix(in_srgb,var(--color-persimmon-200)_50%,transparent)_100%)] dark:bg-[radial-gradient(80%_80%_at_50%_40%,transparent_55%,rgb(0_0_0/0.5)_100%)] pointer-events-none" aria-hidden="true"></div>
 
-  <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto w-full">
-    <h1 class="text-section font-medium text-white leading-tight mb-4 uppercase">
-      Fogonería, el lugar donde cocinamos tu negocio
-    </h1>
-    <p class="text-sm text-white/70 mb-8 leading-relaxed max-w-xl mx-auto">
-      Nosotros creamos, alojamos y mantenemos tu sitio web y carta digital mientras tú te enfocas en cocinar.
+  <!-- Esquinas HUD tipo visor — solo desktop -->
+  <div class="absolute inset-4 sm:inset-6 z-10 hidden sm:block pointer-events-none" aria-hidden="true">
+    <span class="absolute top-0 left-0 w-6 h-6 border-t border-l border-white/40"></span>
+    <span class="absolute top-0 right-0 w-6 h-6 border-t border-r border-white/40"></span>
+    <span class="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-white/40"></span>
+    <span class="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-white/40"></span>
+  </div>
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 pb-10 sm:pb-12 min-w-0">
+    <!-- HUD superior -->
+    <p class="hidden sm:flex items-center gap-2.5 text-xs font-medium uppercase tracking-widest text-white/60 mb-4 sm:mb-5 drop-shadow">
+      <span class="w-2 h-2 bg-primary" aria-hidden="true"></span>
+      <span>Sistema para restaurantes · {heroHud.location}</span>
     </p>
-    <div class="flex flex-col sm:flex-row justify-center gap-3">
-      <a href="#pricing" class="bg-surface text-ink-900 rounded-full px-5 h-10 inline-flex items-center justify-center text-sm font-medium hover:bg-surface/90 transition-all">
-        Ver planes
+
+    <h1 class="font-display uppercase text-white text-display leading-display tracking-display max-w-5xl text-balance break-words min-w-0 drop-shadow-md">
+      <span class="block">Fogonería, el sistema</span>
+      <span class="block">donde cocinamos</span>
+      <span class="block bg-gradient-to-r from-primary via-persimmon-400 to-primary bg-clip-text text-transparent drop-shadow-none">tu negocio</span>
+    </h1>
+
+    <p class="mt-4 sm:mt-5 max-w-xl text-sm leading-relaxed text-white/80 text-pretty drop-shadow">
+      El Business Management System para restaurantes: pedidos, cocina, inventario, caja y reportes en un solo lugar, mientras tú te enfocas en cocinar.
+    </p>
+
+    <div class="mt-6 sm:mt-7 flex flex-col sm:flex-row gap-3">
+      <a href="#cotizaciones" class="bg-primary text-white rounded-full px-5 h-10 min-h-11 sm:min-h-0 w-full sm:w-auto inline-flex items-center justify-center text-sm font-medium hover:bg-primary-hover transition-all">
+        Ver Demo
       </a>
-      <a href="#pricing" class="bg-surface/10 hover:bg-surface/20 text-white border border-white/20 backdrop-blur-sm rounded-full px-5 h-10 inline-flex items-center justify-center text-sm font-medium transition-all">
-        Empezar ahora
+      <a href="#contacto" class="bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-sm rounded-full px-5 h-10 min-h-11 sm:min-h-0 w-full sm:w-auto inline-flex items-center justify-center text-sm font-medium transition-all">
+        Contáctanos
       </a>
     </div>
   </div>

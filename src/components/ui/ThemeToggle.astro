@@ -1,4 +1,6 @@
 ---
+import { cn } from "../../lib/cn";
+
 /**
  * ThemeToggle — Botón modo oscuro/claro.
  * Copia exacta del ERP (fogoneria/apps/web/components/dashboard/AppTopBar.tsx:123-131):
@@ -10,9 +12,10 @@
  */
 interface Props {
   id?: string;
+  class?: string;
 }
 
-const { id } = Astro.props;
+const { id, class: className = "" } = Astro.props;
 ---
 
 <button
@@ -20,7 +23,7 @@ const { id } = Astro.props;
   data-theme-toggle
   id={id}
   aria-label="Cambiar a modo oscuro"
-  class="p-2 text-ink-400 hover:text-ink-900 hover:bg-primary-hover/[0.05] rounded-full transition-colors cursor-pointer"
+  class={cn("p-2 text-ink-400 hover:text-ink-900 hover:bg-primary-hover/[0.05] rounded-full transition-colors cursor-pointer", className)}
 >
   <svg
     class="icon-moon dark:hidden"
