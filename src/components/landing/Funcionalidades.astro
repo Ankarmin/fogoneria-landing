@@ -26,7 +26,13 @@ import { funcionalidades } from "../../lib/landing";
       {funcionalidades.map((f, i) => (
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div class={i % 2 === 1 ? "lg:order-2" : "lg:order-1"}>
-            <DeviceMockup badge={f.badge} phone={f.phone} />
+            <DeviceMockup
+              badge={f.badge}
+              phone={f.phone}
+              image={f.image}
+              alt={f.alt}
+              imagePosition={f.imagePosition}
+            />
           </div>
           <div class={`min-w-0 ${i % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
             <h3 class="font-display uppercase text-display-sm leading-display tracking-display text-ink-900 dark:text-white text-balance break-words mb-4">
