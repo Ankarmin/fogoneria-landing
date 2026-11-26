@@ -54,7 +54,8 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
           </select>
         </div>
         <div class="sm:col-span-2 flex flex-col gap-3 mt-2">
-          <button type="submit" class="bg-primary text-white hover:bg-primary-hover rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
+          <p id="cotizacion-error" role="alert" class="hidden text-xs font-medium text-primary text-center"></p>
+          <button id="cotizacion-submit" type="submit" class="bg-primary text-white hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
             Solicitar cotización
           </button>
           <p class="text-xs text-ink-400 dark:text-white/40 text-center">Sin compromiso. Te contactamos en menos de 24 horas.</p>
@@ -72,14 +73,61 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
 </section>
 
 <script>
-  const form = document.getElementById("cotizacion-form");
+  const form = document.getElementById("cotizacion-form") as HTMLFormElement | null;
   const exito = document.getElementById("cotizacion-exito");
-  if (form && exito) {
-    form.addEventListener("submit", (e) => {
+  const errorBox = document.getElementById("cotizacion-error");
+  const submitBtn = document.getElementById("cotizacion-submit") as HTMLButtonElement | null;
+
+  if (form && exito && errorBox && submitBtn) {
+    const defaultLabel = submitBtn.textContent ?? "Solicitar cotización";
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      form.classList.add("hidden");
-      exito.classList.remove("hidden");
+
+      errorBox.textContent = "";
+      errorBox.classList.add("hidden");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando solicitud...";
+
+      const formData = new FormData(form);
+      const payload = {
+        nombre: String(formData.get("nombre") ?? "").trim(),
+        apellido: String(formData.get("apellido") ?? "").trim(),
+        telefono: String(formData.get("telefono") ?? "").trim(),
+        email: String(formData.get("email") ?? "").trim(),
+        negocio: String(formData.get("negocio") ?? "").trim(),
+        sucursales: String(formData.get("sucursales") ?? "").trim(),
+      };
+
+      try {
+        const response = await fetch("/api/cotizacion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok || !data?.ok) {
+          throw new Error(
+            data?.error ?? "No pudimos enviar tu solicitud. Intenta nuevamente.",
+          );
+        }
+
+        form.reset();
+        form.classList.add("hidden");
+        exito.classList.remove("hidden");
+      } catch (err) {
+        errorBox.textContent =
+          err instanceof Error
+            ? err.message
+            : "Ocurrió un error al enviar tu solicitud. Intenta nuevamente.";
+        errorBox.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = defaultLabel;
+      }
     });
   }
 </script>
