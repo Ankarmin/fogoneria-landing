@@ -6,6 +6,7 @@ import screenPedidos from "../assets/screen-pedidos.png";
 import screenCarta from "../assets/screen-carta.png";
 import screenInventario from "../assets/screen-inventario.png";
 import screenCaja from "../assets/screen-caja.png";
+import screenAsistencia from "../assets/screen-asistencia.png";
 import screenRoles from "../assets/screen-roles.png";
 
 export const heroHud = {
@@ -69,6 +70,8 @@ export const funcionalidades = [
   {
     id: "asistencia",
     badge: "Asistencia registrada · 8:00 a. m.",
+    image: screenAsistencia,
+    alt: "Control de personal, turnos y asistencia semanal en Fogonería",
     title: "Asistencia del equipo",
     desc: "Olvídate del cuaderno: turnos, tardanzas y horas extras registrados solos, listos para planilla.",
     checks: [
