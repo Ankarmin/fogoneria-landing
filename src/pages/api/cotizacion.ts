@@ -21,6 +21,7 @@ const FIELD_LIMITS = {
 const MAX_BODY_BYTES = 8_000;
 const RESEND_TIMEOUT_MS = 10_000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_ADDRESS_RE = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
 
 // Best-effort, per-instance limiter. Vercel can run several instances, so this
 // is a first line of defense, not a replacement for platform-level limits.
@@ -40,6 +41,22 @@ function escapeHtml(value: string): string {
 /** Collapses control characters so user input cannot break email headers. */
 function oneLine(value: string): string {
   return value.replace(/[\r\n\t]+/g, " ").replace(/\s{2,}/g, " ").trim();
+}
+
+/**
+ * dotenv strips wrapping quotes, but Vercel stores them literally. Normalize
+ * both so a copied `.env` line does not reach Resend as an invalid address.
+ */
+function normalizeEnv(raw: string | undefined): string | undefined {
+  if (typeof raw !== "string") return undefined;
+
+  const value = raw.trim().replace(/^(['"])(.*)\1$/, "$2").trim();
+  return value || undefined;
+}
+
+function hasValidAddress(value: string): boolean {
+  const match = value.match(/^(.*?)\s*<([^<>]+)>$/);
+  return EMAIL_ADDRESS_RE.test((match ? match[2] : value).trim());
 }
 
 function jsonResponse(
@@ -270,10 +287,15 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const apiKey = process.env.RESEND_API_KEY ?? import.meta.env.RESEND_API_KEY;
-  const toEmail = process.env.RESEND_TO_EMAIL ?? import.meta.env.RESEND_TO_EMAIL;
-  const fromEmail =
-    process.env.RESEND_FROM_EMAIL ?? import.meta.env.RESEND_FROM_EMAIL;
+  const apiKey = normalizeEnv(
+    process.env.RESEND_API_KEY ?? import.meta.env.RESEND_API_KEY,
+  );
+  const toEmail = normalizeEnv(
+    process.env.RESEND_TO_EMAIL ?? import.meta.env.RESEND_TO_EMAIL,
+  );
+  const fromEmail = normalizeEnv(
+    process.env.RESEND_FROM_EMAIL ?? import.meta.env.RESEND_FROM_EMAIL,
+  );
 
   if (!apiKey || !toEmail || !fromEmail) {
     console.error(
@@ -281,6 +303,19 @@ export const POST: APIRoute = async ({ request }) => {
     );
     return jsonResponse(
       { ok: false, error: "El servicio de correo no está configurado." },
+      500,
+    );
+  }
+
+  if (!hasValidAddress(toEmail) || !hasValidAddress(fromEmail)) {
+    console.error(
+      "RESEND_TO_EMAIL o RESEND_FROM_EMAIL no tienen un formato de correo válido.",
+    );
+    return jsonResponse(
+      {
+        ok: false,
+        error: "El servicio de correo no está configurado correctamente.",
+      },
       500,
     );
   }

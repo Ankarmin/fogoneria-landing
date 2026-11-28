@@ -47,6 +47,8 @@ No test / lint / typecheck scripts, no CI workflows. Verify with `pnpm build`.
 
 `.env` is gitignored; `.env.example` documents the variables. Redeploy after changing them.
 
+> En Vercel, cargá los valores **sin comillas**. Vercel no las interpreta como dotenv: las guarda literalmente, y Resend rechaza el `from` con `422` (`"Fogonería <...>"` no es un remitente válido). El endpoint normaliza comillas por defensa, pero lo correcto es no incluirlas.
+
 ## Dev server
 
 `astro dev --background`; manage with `astro dev stop|status|logs`.
