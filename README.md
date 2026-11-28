@@ -36,6 +36,8 @@ Copiá `.env.example` a `.env` para desarrollo. En producción, configurá las m
 | `RESEND_FROM_EMAIL` | Sí | Remitente verificado en Resend, por ejemplo `Fogonería <cotizaciones@tudominio.com>`. |
 | `PUBLIC_ORIGIN_URL` | No | URL del sistema principal (default `http://localhost:3000`). |
 
+> En Vercel, cargá los valores **sin comillas**. Vercel no las interpreta como un archivo `.env`: las guarda literalmente y Resend rechaza el remitente con `422`. El endpoint las normaliza por defensa, pero lo correcto es no incluirlas.
+
 El formulario envía JSON a `/api/cotizacion`; el endpoint valida los campos, aplica límites de tamaño, honeypot y un rate limit best-effort, y manda un correo HTML + texto plano con `reply_to` al prospecto.
 
 ## Estructura
