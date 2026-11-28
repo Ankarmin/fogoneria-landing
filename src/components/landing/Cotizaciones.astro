@@ -1,5 +1,6 @@
 ---
 import SectionHeader from "../ui/SectionHeader.astro";
+import { ORIGIN_URLS } from "../../lib/site";
 
 const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 bg-white dark:bg-white/5 px-4 text-sm text-ink-900 dark:text-white placeholder:text-ink-400 dark:placeholder:text-white/40 focus:border-primary focus:outline-none w-full transition-colors";
 ---
@@ -23,26 +24,30 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
     </div>
 
     <div class="bg-white dark:bg-white/[0.06] rounded-2xl border border-primary/40 dark:border-white/15 p-4 sm:p-6 min-w-0">
-      <form id="cotizacion-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4" novalidate={false}>
+      <form id="cotizacion-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="hidden">
+          <label for="cot-website">No completar este campo</label>
+          <input id="cot-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="flex flex-col gap-2">
           <label for="cot-nombre" class="text-sm font-medium text-ink-900 dark:text-white">Nombre*</label>
-          <input id="cot-nombre" name="nombre" type="text" required placeholder="Ingresa tu nombre" class={inputCls} autocomplete="given-name" />
+          <input id="cot-nombre" name="nombre" type="text" required maxlength="80" placeholder="Ingresa tu nombre" class={inputCls} autocomplete="given-name" />
         </div>
         <div class="flex flex-col gap-2">
           <label for="cot-apellido" class="text-sm font-medium text-ink-900 dark:text-white">Apellido*</label>
-          <input id="cot-apellido" name="apellido" type="text" required placeholder="Ingresa tu apellido" class={inputCls} autocomplete="family-name" />
+          <input id="cot-apellido" name="apellido" type="text" required maxlength="80" placeholder="Ingresa tu apellido" class={inputCls} autocomplete="family-name" />
         </div>
         <div class="flex flex-col gap-2">
           <label for="cot-telefono" class="text-sm font-medium text-ink-900 dark:text-white">Teléfono de contacto*</label>
-          <input id="cot-telefono" name="telefono" type="tel" required placeholder="+51 911 234 567" class={inputCls} autocomplete="tel" />
+          <input id="cot-telefono" name="telefono" type="tel" required maxlength="25" placeholder="+51 911 234 567" class={inputCls} autocomplete="tel" />
         </div>
         <div class="flex flex-col gap-2">
           <label for="cot-email" class="text-sm font-medium text-ink-900 dark:text-white">Email*</label>
-          <input id="cot-email" name="email" type="email" required placeholder="Ingresa tu correo" class={inputCls} autocomplete="email" />
+          <input id="cot-email" name="email" type="email" required maxlength="254" placeholder="Ingresa tu correo" class={inputCls} autocomplete="email" />
         </div>
         <div class="flex flex-col gap-2">
           <label for="cot-negocio" class="text-sm font-medium text-ink-900 dark:text-white">Nombre del negocio*</label>
-          <input id="cot-negocio" name="negocio" type="text" required placeholder="Ingresa el nombre de tu restaurante" class={inputCls} autocomplete="organization" />
+          <input id="cot-negocio" name="negocio" type="text" required maxlength="120" placeholder="Ingresa el nombre de tu restaurante" class={inputCls} autocomplete="organization" />
         </div>
         <div class="flex flex-col gap-2">
           <label for="cot-sucursales" class="text-sm font-medium text-ink-900 dark:text-white">Cantidad de sucursales*</label>
@@ -54,13 +59,18 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
           </select>
         </div>
         <div class="sm:col-span-2 flex flex-col gap-3 mt-2">
-          <button type="submit" class="bg-primary text-white hover:bg-primary-hover rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
+          <p id="cotizacion-error" role="alert" class="hidden text-xs font-medium text-primary text-center"></p>
+          <button id="cotizacion-submit" type="submit" class="bg-primary text-white hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
             Solicitar cotización
           </button>
           <p class="text-xs text-ink-400 dark:text-white/40 text-center">Sin compromiso. Te contactamos en menos de 24 horas.</p>
+          <p class="text-xs text-ink-400 dark:text-white/40 text-center">
+            Al enviar aceptas nuestros
+            <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-ink-600 dark:hover:text-white/60">términos y política de privacidad</a>.
+          </p>
         </div>
       </form>
-      <div id="cotizacion-exito" class="hidden text-center py-8" aria-live="polite">
+      <div id="cotizacion-exito" class="hidden text-center py-8" aria-live="polite" tabindex="-1">
         <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </div>
@@ -72,14 +82,72 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
 </section>
 
 <script>
-  const form = document.getElementById("cotizacion-form");
+  const form = document.getElementById("cotizacion-form") as HTMLFormElement | null;
   const exito = document.getElementById("cotizacion-exito");
-  if (form && exito) {
-    form.addEventListener("submit", (e) => {
+  const errorBox = document.getElementById("cotizacion-error");
+  const submitBtn = document.getElementById("cotizacion-submit") as HTMLButtonElement | null;
+
+  if (form && exito && errorBox && submitBtn) {
+    const defaultLabel = submitBtn.textContent ?? "Solicitar cotización";
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      form.classList.add("hidden");
-      exito.classList.remove("hidden");
+
+      errorBox.textContent = "";
+      errorBox.classList.add("hidden");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando solicitud...";
+      form.setAttribute("aria-busy", "true");
+
+      const formData = new FormData(form);
+      const payload = {
+        nombre: String(formData.get("nombre") ?? "").trim(),
+        apellido: String(formData.get("apellido") ?? "").trim(),
+        telefono: String(formData.get("telefono") ?? "").trim(),
+        email: String(formData.get("email") ?? "").trim(),
+        negocio: String(formData.get("negocio") ?? "").trim(),
+        sucursales: String(formData.get("sucursales") ?? "").trim(),
+        website: String(formData.get("website") ?? "").trim(),
+      };
+
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 15_000);
+
+      try {
+        const response = await fetch("/api/cotizacion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok || !data?.ok) {
+          throw new Error(
+            data?.error ?? "No pudimos enviar tu solicitud. Intenta nuevamente.",
+          );
+        }
+
+        form.reset();
+        form.classList.add("hidden");
+        exito.classList.remove("hidden");
+        exito.focus();
+      } catch (err) {
+        errorBox.classList.remove("hidden");
+        errorBox.textContent =
+          err instanceof DOMException && err.name === "AbortError"
+            ? "La solicitud tardó demasiado. Revisa tu conexión e intenta nuevamente."
+            : err instanceof Error
+              ? err.message
+              : "Ocurrió un error al enviar tu solicitud. Intenta nuevamente.";
+      } finally {
+        window.clearTimeout(timeout);
+        submitBtn.disabled = false;
+        submitBtn.textContent = defaultLabel;
+        form.removeAttribute("aria-busy");
+      }
     });
   }
 </script>
