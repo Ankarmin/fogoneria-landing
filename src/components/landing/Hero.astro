@@ -1,13 +1,14 @@
 ---
 import { Image } from "astro:assets";
-import heroImg from "../../assets/hero-fogoneria.png";
+import heroImg from "../../assets/hero-fogoneria.jpg";
 import { heroHud } from "../../lib/landing";
+import { ORIGIN_URLS } from "../../lib/site";
 ---
 
 <section id="inicio" class="relative w-full min-h-[calc(100svh-4rem)] flex items-center bg-gradient-to-b from-surface via-surface to-persimmon-100/60 dark:from-black dark:via-black dark:to-persimmon-950/60 overflow-hidden scroll-mt-16">
-  <Image src={heroImg} alt="Salón de restaurante Fogonería de noche" class="absolute inset-0 w-full h-full object-cover animate-hero-zoom" widths={[960, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
+  <Image src={heroImg} alt="Salón de restaurante de noche" class="absolute inset-0 w-full h-full object-cover animate-hero-zoom" widths={[960, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" />
   <div class="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent dark:from-black/90 dark:via-black/45 dark:to-black/5" aria-hidden="true"></div>
-  <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-surface/55 via-surface/15 to-transparent dark:from-black/85 dark:via-black/20 dark:to-transparent" aria-hidden="true"></div>
+  <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-surface/30 via-surface/5 to-transparent dark:from-black/85 dark:via-black/20 dark:to-transparent" aria-hidden="true"></div>
   <div class="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_40%,transparent_60%,color-mix(in_srgb,var(--color-persimmon-200)_50%,transparent)_100%)] dark:bg-[radial-gradient(80%_80%_at_50%_40%,transparent_55%,rgb(0_0_0/0.5)_100%)] pointer-events-none" aria-hidden="true"></div>
 
   <!-- Esquinas HUD tipo visor — solo desktop -->
@@ -25,9 +26,9 @@ import { heroHud } from "../../lib/landing";
       <span>Sistema para restaurantes · {heroHud.location}</span>
     </p>
 
-    <h1 class="font-display uppercase text-white text-display leading-display tracking-display max-w-5xl text-balance break-words min-w-0 drop-shadow-md">
-      <span class="block">Fogonería, el sistema</span>
-      <span class="block">donde cocinamos</span>
+    <h1 class="font-display uppercase text-white text-display leading-display tracking-display max-w-5xl break-words min-w-0 drop-shadow-md">
+      <span class="block">Fogonería, el sistema</span>{" "}
+      <span class="block">donde cocinamos</span>{" "}
       <span class="block bg-gradient-to-r from-primary via-persimmon-400 to-primary bg-clip-text text-transparent drop-shadow-none">tu negocio</span>
     </h1>
 
@@ -36,11 +37,11 @@ import { heroHud } from "../../lib/landing";
     </p>
 
     <div class="mt-6 sm:mt-7 flex flex-col sm:flex-row gap-3">
-      <a href="#cotizaciones" class="bg-primary text-white rounded-full px-5 h-10 min-h-11 sm:min-h-0 w-full sm:w-auto inline-flex items-center justify-center text-sm font-medium hover:bg-primary-hover transition-all">
-        Ver Demo
+      <a href={ORIGIN_URLS.demo("criolla")} target="_blank" rel="noopener noreferrer" class="bg-primary text-on-primary rounded-full px-5 h-10 min-h-11 sm:min-h-0 w-full sm:w-auto inline-flex items-center justify-center text-sm font-medium hover:bg-primary-hover transition-all">
+        Ver demo<span class="sr-only"> (abre en una pestaña nueva)</span>
       </a>
-      <a href="#contacto" class="bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-sm rounded-full px-5 h-10 min-h-11 sm:min-h-0 w-full sm:w-auto inline-flex items-center justify-center text-sm font-medium transition-all">
-        Contáctanos
+      <a href="#cotizaciones" class="bg-white/10 hover:bg-white/20 text-white border border-white/25 backdrop-blur-sm rounded-full px-5 h-10 min-h-11 sm:min-h-0 w-full sm:w-auto inline-flex items-center justify-center text-sm font-medium transition-all">
+        Cotizar
       </a>
     </div>
   </div>

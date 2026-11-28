@@ -3,7 +3,7 @@ import { ORIGIN_URLS } from "../../lib/site";
 import { heroHud } from "../../lib/landing";
 ---
 
-<footer id="contacto" class="bg-gradient-to-b from-primary/[0.16] via-primary/[0.14] to-primary/[0.24] dark:from-black dark:via-persimmon-950/50 dark:to-black text-ink-900 dark:text-white pt-12 pb-8 relative overflow-hidden">
+<footer id="contacto" class="scroll-mt-16 bg-gradient-to-b from-primary/[0.16] via-primary/[0.14] to-primary/[0.24] dark:from-black dark:via-persimmon-950/50 dark:to-black text-ink-900 dark:text-white pt-12 pb-8 relative overflow-hidden">
   <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-8 mb-12">
       <div class="flex flex-col gap-4">
@@ -33,39 +33,29 @@ import { heroHud } from "../../lib/landing";
       <div>
         <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Soporte</h3>
         <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
-          <li><a href="#" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Centro de Ayuda</a></li>
           <li><a href="#faq" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Preguntas Frecuentes</a></li>
-          <li><a href="#" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Tutoriales</a></li>
+          <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Solicitar cotización</a></li>
         </ul>
       </div>
 
       <div>
         <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Comunícate</h3>
-        <p class="text-xs font-medium uppercase tracking-widest text-ink-400 dark:text-white/50 mb-3 flex items-center gap-2">
+        <p class="text-xs font-medium uppercase tracking-widest text-ink-400 mb-3 flex items-center gap-2">
           <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden="true"></span>
           {heroHud.location}
         </p>
-        <ul class="flex flex-col gap-3 text-sm text-ink-600 dark:text-white/60">
-          <li class="flex items-start gap-2">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="shrink-0 mt-0.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            <span>hola@fogoneria.com</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="shrink-0 mt-0.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-            <span>+51 987 654 321</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="shrink-0 mt-0.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            <span>Lima, Perú</span>
-          </li>
+        <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
+          <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Cotiza tu sistema</a></li>
+          <li><a href={ORIGIN_URLS.home} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Ir al sistema</a></li>
+          <li><a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Términos y condiciones</a></li>
         </ul>
       </div>
     </div>
 
     <div class="pt-6 border-t border-ink-900/10 dark:border-white/10 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
-      <div class="text-xs text-ink-400 dark:text-white/40 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
-        <span>© 2026 Fogonería. Todos los derechos reservados.</span>
-        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener" class="hover:text-ink-900 dark:hover:text-white transition-colors">
+      <div class="text-xs text-ink-400 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
+        <span>© {new Date().getFullYear()} Fogonería. Todos los derechos reservados.</span>
+        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors">
           Políticas, términos y condiciones
         </a>
       </div>

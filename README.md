@@ -34,19 +34,25 @@ Copiá `.env.example` a `.env` para desarrollo. En producción, configurá las m
 | `RESEND_API_KEY` | Sí | API key de Resend (`re_...`). No se commitea. |
 | `RESEND_TO_EMAIL` | Sí | Correo que recibe las solicitudes de cotización. |
 | `RESEND_FROM_EMAIL` | Sí | Remitente verificado en Resend, por ejemplo `Fogonería <cotizaciones@tudominio.com>`. |
-| `PUBLIC_ORIGIN_URL` | No | URL del sistema principal (default `http://localhost:3000`). |
+| `PUBLIC_ORIGIN_URL` | No | URL del sistema principal (default dev `http://localhost:3000`; default prod `https://fogoneria-system.vercel.app`). |
+| `PUBLIC_SITE_URL` | No | URL pública del landing para canonical, OG y sitemap (default `https://fogoneria-landing.vercel.app`). |
 
 > En Vercel, cargá los valores **sin comillas**. Vercel no las interpreta como un archivo `.env`: las guarda literalmente y Resend rechaza el remitente con `422`. El endpoint las normaliza por defensa, pero lo correcto es no incluirlas.
 
-El formulario envía JSON a `/api/cotizacion`; el endpoint valida los campos, aplica límites de tamaño, honeypot y un rate limit best-effort, y manda un correo HTML + texto plano con `reply_to` al prospecto.
+El formulario incluye consentimiento explícito para el tratamiento de datos y envía JSON a `/api/cotizacion`; el endpoint valida los campos y el consentimiento, aplica límites de tamaño, honeypot y un rate limit best-effort, y manda un correo HTML + texto plano con `reply_to` al prospecto.
+
+> El footer no publica email ni teléfono placeholders. El canal de contacto es el formulario; si agregás datos reales, centralizalos en `src/lib/site.ts` y verificá que el dominio tenga MX.
 
 ## Estructura
 
 ```text
 src/
   pages/
-    index.astro          # única página (Hero → QuienesSomos → Funcionalidades → Reseñas → Cotizaciones → FAQ)
+    index.astro          # página principal (Hero → QuienesSomos → Funcionalidades → Reseñas → Cotizaciones → FAQ)
     api/cotizacion.ts    # endpoint serverless del formulario
+    404.astro            # 404 con marca
+    sitemap.xml.ts       # sitemap estático generado desde Astro.site
+    robots.txt.ts        # robots + sitemap
   components/
     landing/             # secciones de la página
     layout/              # Navbar y Footer
@@ -56,6 +62,9 @@ src/
     landing.ts           # copy y datos de la landing
   assets/                # imágenes optimizadas por Astro
   styles/globals.css     # tokens y estilos (Tailwind v4)
+vercel.json              # headers de seguridad
 ```
+
+La página incluye canonical, Open Graph/Twitter, JSON-LD (`Organization` + `FAQPage`), skip link, temas claro/oscuro persistentes y movimiento reducido.
 
 Las convenciones de código y contenido están en [`AGENTS.md`](./AGENTS.md).

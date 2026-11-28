@@ -12,8 +12,8 @@ import SectionDivider from "../components/ui/SectionDivider.astro";
 ---
 
 <BaseLayout>
-  <main class="bg-surface dark:bg-black min-h-screen w-full overflow-x-clip">
-    <Navbar />
+  <Navbar />
+  <main id="main-content" tabindex="-1" class="bg-surface dark:bg-black min-h-screen w-full overflow-x-clip">
     <div class="pt-16">
       <Hero />
       <SectionDivider />
@@ -28,6 +28,6 @@ import SectionDivider from "../components/ui/SectionDivider.astro";
       <Faq />
     </div>
     <SectionDivider />
-    <Footer />
   </main>
+  <Footer />
 </BaseLayout>
