@@ -1,3 +1,4 @@
+import type { ImageMetadata } from "astro";
 import review1 from "../assets/review-1.jpg";
 import review2 from "../assets/review-2.jpg";
 import review3 from "../assets/review-3.jpg";
@@ -13,7 +14,19 @@ export const heroHud = {
   location: "Lima / PE",
 };
 
-export const funcionalidades = [
+export interface Funcionalidad {
+  id: string;
+  badge: string;
+  image: ImageMetadata;
+  alt: string;
+  title: string;
+  desc: string;
+  checks: string[];
+  phone?: boolean;
+  imagePosition?: "top" | "center";
+}
+
+export const funcionalidades: Funcionalidad[] = [
   {
     id: "pedidos",
     badge: "Pedido recibido · hace 3s",
@@ -85,7 +98,7 @@ export const funcionalidades = [
     badge: "Rol asignado · Mesero",
     image: screenRoles,
     alt: "Inicio de sesión y acceso por rol en Fogonería",
-    imagePosition: "center" as const,
+    imagePosition: "center",
     title: "Roles y permisos",
     desc: "Cada puesto ve solo lo que le toca: tú creas los roles de Admin, Cocina y Mesero, y el sistema hace el resto.",
     checks: [

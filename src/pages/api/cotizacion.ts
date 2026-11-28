@@ -2,13 +2,31 @@ import type { APIRoute } from "astro";
 
 export const prerender = false;
 
-const SUCURSALES_LABEL: Record<string, string> = {
+const SUCURSALES = {
   "1": "1 local",
   "2-3": "2 a 3 locales",
   "4+": "4 o más locales",
-};
+} as const;
 
+type SucursalKey = keyof typeof SUCURSALES;
+
+const FIELD_LIMITS = {
+  nombre: 80,
+  apellido: 80,
+  telefono: 25,
+  email: 254,
+  negocio: 120,
+} as const;
+
+const MAX_BODY_BYTES = 8_000;
+const RESEND_TIMEOUT_MS = 10_000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Best-effort, per-instance limiter. Vercel can run several instances, so this
+// is a first line of defense, not a replacement for platform-level limits.
+const RATE_LIMIT_WINDOW_MS = 10 * 60_000;
+const RATE_LIMIT_MAX = 5;
+const rateLimitHits = new Map<string, { count: number; resetAt: number }>();
 
 function escapeHtml(value: string): string {
   return value
@@ -19,36 +37,82 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function jsonResponse(body: Record<string, unknown>, status = 200): Response {
+/** Collapses control characters so user input cannot break email headers. */
+function oneLine(value: string): string {
+  return value.replace(/[\r\n\t]+/g, " ").replace(/\s{2,}/g, " ").trim();
+}
+
+function jsonResponse(
+  body: Record<string, unknown>,
+  status = 200,
+  extraHeaders: Record<string, string> = {},
+): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
+      ...extraHeaders,
+    },
   });
+}
+
+function clientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
+  return request.headers.get("x-real-ip") ?? "unknown";
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const current = rateLimitHits.get(ip);
+
+  if (!current || current.resetAt <= now) {
+    if (rateLimitHits.size > 1_000) {
+      for (const [key, entry] of rateLimitHits) {
+        if (entry.resetAt <= now) rateLimitHits.delete(key);
+      }
+    }
+    rateLimitHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  current.count += 1;
+  return current.count > RATE_LIMIT_MAX;
+}
+
+function readField(
+  payload: Record<string, unknown>,
+  key: keyof typeof FIELD_LIMITS,
+): string | null {
+  const raw = payload[key];
+  if (typeof raw !== "string") return null;
+
+  const value = oneLine(raw);
+  if (!value || value.length > FIELD_LIMITS[key]) return null;
+
+  return value;
 }
 
 function buildEmailHtml(params: {
   nombreCompleto: string;
   telefono: string;
-  telefonoLimpio: string;
   email: string;
   negocio: string;
   sucursalesLabel: string;
   fechaLima: string;
+  waLink: string;
 }): string {
   const {
     nombreCompleto,
     telefono,
-    telefonoLimpio,
     email,
     negocio,
     sucursalesLabel,
     fechaLima,
+    waLink,
   } = params;
-
-  const waLink =
-    telefonoLimpio.length >= 8
-      ? `https://wa.me/${telefonoLimpio}`
-      : "";
 
   return `<!DOCTYPE html>
 <html lang="es">
@@ -195,27 +259,58 @@ function buildEmailHtml(params: {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const apiKey = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
-  const toEmail =
-    import.meta.env.RESEND_TO_EMAIL ||
-    process.env.RESEND_TO_EMAIL ||
-    "sebastian.chicata@gmail.com";
-  const fromEmail =
-    import.meta.env.RESEND_FROM_EMAIL ||
-    process.env.RESEND_FROM_EMAIL ||
-    "Fogonería <onboarding@resend.dev>";
+  if (isRateLimited(clientIp(request))) {
+    return jsonResponse(
+      {
+        ok: false,
+        error: "Recibimos varias solicitudes seguidas. Intenta nuevamente en unos minutos.",
+      },
+      429,
+      { "Retry-After": String(Math.ceil(RATE_LIMIT_WINDOW_MS / 1000)) },
+    );
+  }
 
-  if (!apiKey) {
-    console.error("Falta configurar la variable de entorno RESEND_API_KEY.");
+  const apiKey = process.env.RESEND_API_KEY ?? import.meta.env.RESEND_API_KEY;
+  const toEmail = process.env.RESEND_TO_EMAIL ?? import.meta.env.RESEND_TO_EMAIL;
+  const fromEmail =
+    process.env.RESEND_FROM_EMAIL ?? import.meta.env.RESEND_FROM_EMAIL;
+
+  if (!apiKey || !toEmail || !fromEmail) {
+    console.error(
+      "Faltan variables de entorno de Resend: RESEND_API_KEY, RESEND_TO_EMAIL y RESEND_FROM_EMAIL.",
+    );
     return jsonResponse(
       { ok: false, error: "El servicio de correo no está configurado." },
       500,
     );
   }
 
-  let payload: Record<string, unknown>;
+  const contentType = request.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) {
+    return jsonResponse(
+      { ok: false, error: "Formato de solicitud inválido." },
+      415,
+    );
+  }
+
+  const contentLength = Number(request.headers.get("content-length") ?? 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return jsonResponse(
+      { ok: false, error: "La solicitud es demasiado grande." },
+      413,
+    );
+  }
+
+  let payload: unknown;
   try {
-    payload = await request.json();
+    const rawBody = await request.text();
+    if (rawBody.length > MAX_BODY_BYTES) {
+      return jsonResponse(
+        { ok: false, error: "La solicitud es demasiado grande." },
+        413,
+      );
+    }
+    payload = JSON.parse(rawBody);
   } catch {
     return jsonResponse(
       { ok: false, error: "Formato de solicitud inválido." },
@@ -223,16 +318,40 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const nombre = String(payload.nombre ?? "").trim();
-  const apellido = String(payload.apellido ?? "").trim();
-  const telefono = String(payload.telefono ?? "").trim();
-  const email = String(payload.email ?? "").trim();
-  const negocio = String(payload.negocio ?? "").trim();
-  const sucursales = String(payload.sucursales ?? "").trim();
+  if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
+    return jsonResponse(
+      { ok: false, error: "Formato de solicitud inválido." },
+      400,
+    );
+  }
 
-  if (!nombre || !apellido || !telefono || !email || !negocio || !sucursales) {
+  const data = payload as Record<string, unknown>;
+
+  // Honeypot: bots fill hidden fields. Answer success so they do not retry.
+  if (typeof data.website === "string" && data.website.trim() !== "") {
+    return jsonResponse({ ok: true });
+  }
+
+  const nombre = readField(data, "nombre");
+  const apellido = readField(data, "apellido");
+  const telefono = readField(data, "telefono");
+  const email = readField(data, "email");
+  const negocio = readField(data, "negocio");
+  const sucursalesRaw = data.sucursales;
+
+  if (!nombre || !apellido || !telefono || !email || !negocio) {
     return jsonResponse(
       { ok: false, error: "Por favor completa todos los campos obligatorios." },
+      400,
+    );
+  }
+
+  if (
+    typeof sucursalesRaw !== "string" ||
+    !Object.prototype.hasOwnProperty.call(SUCURSALES, sucursalesRaw)
+  ) {
+    return jsonResponse(
+      { ok: false, error: "Selecciona una cantidad de sucursales válida." },
       400,
     );
   }
@@ -244,9 +363,20 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const sucursalesLabel = SUCURSALES_LABEL[sucursales] ?? sucursales;
-  const nombreCompleto = `${nombre} ${apellido}`;
   const telefonoLimpio = telefono.replace(/[^\d]/g, "");
+  if (telefonoLimpio.length < 6) {
+    return jsonResponse(
+      { ok: false, error: "Ingresa un teléfono de contacto válido." },
+      400,
+    );
+  }
+
+  const sucursales = sucursalesRaw as SucursalKey;
+  const sucursalesLabel = SUCURSALES[sucursales];
+  const nombreCompleto = `${nombre} ${apellido}`;
+  const waNumber =
+    telefonoLimpio.length === 9 ? `51${telefonoLimpio}` : telefonoLimpio;
+  const waLink = waNumber.length >= 8 ? `https://wa.me/${waNumber}` : "";
   const fechaLima = new Intl.DateTimeFormat("es-PE", {
     dateStyle: "long",
     timeStyle: "short",
@@ -256,11 +386,11 @@ export const POST: APIRoute = async ({ request }) => {
   const html = buildEmailHtml({
     nombreCompleto,
     telefono,
-    telefonoLimpio,
     email,
     negocio,
     sucursalesLabel,
     fechaLima,
+    waLink,
   });
 
   const text = [
@@ -274,26 +404,26 @@ export const POST: APIRoute = async ({ request }) => {
     `Fecha: ${fechaLima}`,
   ].join("\n");
 
-  const resendResponse = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      reply_to: email,
-      subject: `Nueva cotización: ${negocio} (${sucursalesLabel})`,
-      html,
-      text,
-    }),
-  });
-
-  const resendData = await resendResponse.json().catch(() => null);
-
-  if (!resendResponse.ok) {
-    console.error("Error enviando correo con Resend:", resendResponse.status, resendData);
+  let resendResponse: Response;
+  try {
+    resendResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [toEmail],
+        reply_to: email,
+        subject: `Nueva cotización: ${negocio} (${sucursalesLabel})`,
+        html,
+        text,
+      }),
+      signal: AbortSignal.timeout(RESEND_TIMEOUT_MS),
+    });
+  } catch (error) {
+    console.error("No se pudo conectar con Resend:", error);
     return jsonResponse(
       {
         ok: false,
@@ -303,5 +433,28 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  return jsonResponse({ ok: true, id: resendData?.id }, 200);
+  const resendData = await resendResponse.json().catch(() => null);
+
+  if (!resendResponse.ok) {
+    console.error(
+      "Error enviando correo con Resend:",
+      resendResponse.status,
+      resendData,
+    );
+    return jsonResponse(
+      {
+        ok: false,
+        error: "No pudimos enviar tu solicitud. Intenta nuevamente en unos minutos.",
+      },
+      502,
+    );
+  }
+
+  return jsonResponse({ ok: true });
 };
+
+export const ALL: APIRoute = () =>
+  new Response(null, {
+    status: 405,
+    headers: { Allow: "POST", "Cache-Control": "no-store" },
+  });

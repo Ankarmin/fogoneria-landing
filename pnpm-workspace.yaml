@@ -1,3 +1,8 @@
 allowBuilds:
   esbuild: true
   sharp: true
+
+# @astrojs/vercel empaqueta la función creando symlinks. En Windows sin
+# privilegios de symlink (Developer Mode) eso falla con EPERM, así que usamos
+# el linker hoisted; en Vercel/Linux el resultado es equivalente.
+nodeLinker: hoisted
