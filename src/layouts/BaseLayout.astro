@@ -6,11 +6,13 @@ import heroOg from "../assets/hero-fogoneria.jpg";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "Fogonería — Sistema de gestión para restaurantes",
   description = "Pedidos, cocina, inventario, caja y reportes en un solo sistema. Fogonería ordena la operación de tu restaurante para que te enfoques en cocinar.",
+  noindex = false,
 } = Astro.props;
 
 const site = Astro.site ?? new URL("https://fogoneria-landing.vercel.app");
@@ -44,7 +46,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem('fogoneria:theme
     <meta name="color-scheme" content="light dark" />
     <meta name="description" content={description} />
     <style is:inline>html{background:#fffdf9}html.dark{background:#141210}</style>
-    <link rel="canonical" href={canonical.href} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonical.href} />}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Fogonería" />
@@ -63,8 +65,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem('fogoneria:theme
     <meta name="twitter:image" content={ogImageUrl.href} />
     <meta name="twitter:image:alt" content="Salón de restaurante de noche" />
 
-    <meta name="theme-color" content="#c13614" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#c13614" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />

@@ -3,8 +3,8 @@ import { ORIGIN_URLS } from "../../lib/site";
 import { heroHud } from "../../lib/landing";
 ---
 
-<footer id="contacto" class="scroll-mt-16 bg-gradient-to-b from-primary/[0.16] via-primary/[0.14] to-primary/[0.24] dark:from-black dark:via-persimmon-950/50 dark:to-black text-ink-900 dark:text-white pt-12 pb-8 relative overflow-hidden">
-  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+<footer id="contacto" class="scroll-mt-16 bg-gradient-to-b from-primary/[0.16] via-primary/[0.14] to-primary/[0.18] dark:from-black dark:via-persimmon-950/50 dark:to-black text-ink-900 dark:text-white pt-12 pb-8 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-8 mb-12">
       <div class="flex flex-col gap-4">
         <div class="flex items-center gap-2">
@@ -19,19 +19,18 @@ import { heroHud } from "../../lib/landing";
       </div>
 
       <div>
-        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Plataforma</h3>
+        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3">Plataforma</h3>
         <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
           <li><a href="#inicio" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Inicio</a></li>
           <li><a href="#quienes-somos" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Quiénes Somos</a></li>
           <li><a href="#funcionalidades" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Funcionalidades</a></li>
-          <li><a href="#reviews" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Reseñas</a></li>
           <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">Cotizaciones</a></li>
           <li><a href="#faq" class="hover:text-ink-900 dark:hover:text-white transition-colors px-0 py-2.5 min-h-11 inline-flex items-center">FAQ</a></li>
         </ul>
       </div>
 
       <div>
-        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Soporte</h3>
+        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3">Soporte</h3>
         <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
           <li><a href="#faq" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Preguntas Frecuentes</a></li>
           <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Solicitar cotización</a></li>
@@ -39,27 +38,27 @@ import { heroHud } from "../../lib/landing";
       </div>
 
       <div>
-        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3 dark:border-l-0 dark:pl-0">Comunícate</h3>
+        <h3 class="text-ink-900 dark:text-white font-medium mb-4 uppercase text-xs tracking-widest border-l-2 border-primary pl-3">Comunícate</h3>
         <p class="text-xs font-medium uppercase tracking-widest text-ink-400 mb-3 flex items-center gap-2">
           <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden="true"></span>
           {heroHud.location}
         </p>
         <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
           <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Cotiza tu sistema</a></li>
-          <li><a href={ORIGIN_URLS.home} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Ir al sistema</a></li>
-          <li><a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Términos y condiciones</a></li>
+          <li><a href={ORIGIN_URLS.home} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Ir al sistema<span class="sr-only"> (abre en una pestaña nueva)</span></a></li>
+          <li><a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Términos y condiciones<span class="sr-only"> (abre en una pestaña nueva)</span></a></li>
           <li><a href="/privacidad/" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Política de privacidad</a></li>
         </ul>
       </div>
     </div>
 
     <div class="pt-6 border-t border-ink-900/10 dark:border-white/10 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
-      <div class="text-xs text-ink-400 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
+      <div class="text-xs text-ink-600 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
         <span>© {new Date().getFullYear()} Fogonería. Todos los derechos reservados.</span>
-        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors">
-          Términos y condiciones
+        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center hover:text-ink-900 dark:hover:text-white transition-colors">
+          Términos y condiciones<span class="sr-only"> (abre en una pestaña nueva)</span>
         </a>
-        <a href="/privacidad/" class="hover:text-ink-900 dark:hover:text-white transition-colors">
+        <a href="/privacidad/" class="inline-flex min-h-11 items-center hover:text-ink-900 dark:hover:text-white transition-colors">
           Política de privacidad
         </a>
       </div>

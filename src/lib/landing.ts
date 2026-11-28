@@ -27,7 +27,7 @@ export const funcionalidades: Funcionalidad[] = [
     id: "pedidos",
     badge: "Pedido recibido · hace 3s",
     image: screenPedidos,
-    alt: "Vista de órdenes y comandas en vivo en Fogonería",
+    alt: "Vista de órdenes y cuentas en Fogonería",
     title: "Pedidos y comandas en tiempo real",
     desc: "Del salón a la cocina sin gritos ni papeles: el mesero manda la comanda y cocina la ve al instante, con estados que todos entienden.",
     checks: [
@@ -52,7 +52,6 @@ export const funcionalidades: Funcionalidad[] = [
   {
     id: "inventario",
     badge: "Stock actualizado · hace 2s",
-    phone: true,
     image: screenInventario,
     alt: "Control de inventario y stock de insumos en tiempo real en Fogonería",
     title: "Inventario que se actualiza solo",
@@ -60,7 +59,7 @@ export const funcionalidades: Funcionalidad[] = [
     checks: [
       "Descuento automático según receta",
       "Alertas de stock bajo",
-      "Costo real de cada plato",
+      "Recetas y costos de insumos",
     ],
   },
   {
@@ -86,57 +85,22 @@ export const funcionalidades: Funcionalidad[] = [
     checks: [
       "Marcación de ingreso y salida",
       "Turnos y horarios por sucursal",
-      "Reporte listo para planilla",
+      "Horas y turnos del equipo en un solo lugar",
     ],
   },
   {
     id: "roles",
     badge: "Rol asignado · Mesero",
     image: screenRoles,
-    alt: "Inicio de sesión y acceso por rol en Fogonería",
+    alt: "Inicio de sesión de Fogonería",
     imagePosition: "center",
-    title: "Acceso seguro por rol",
-    desc: "Cada persona entra con su cuenta y ve solo lo que le toca. Tú defines los roles de Admin, Cocina y Mesero.",
+    title: "Equipo y accesos",
+    desc: "Cada persona entra con su cuenta y encuentra su espacio de trabajo. Organiza los perfiles de Admin, Cocina y Mesero.",
     checks: [
-      "Roles de Admin, Cocina y Mesero",
-      "Permisos limitados por sucursal",
+      "Perfiles de Admin, Cocina y Mesero",
+      "Cada perfil con su espacio de trabajo",
       "Movimientos auditados por usuario",
     ],
-  },
-];
-
-export const reviews = [
-  {
-    id: 1,
-    name: "Carlos Mendoza",
-    restaurant: "Cevichería El Muelle",
-    quote:
-      "Antes cerrábamos caja con cuaderno y calculadora hasta la medianoche. Ahora los pedidos caen directo a cocina y el cierre sale solo. Fogonería nos ordenó la casa.",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Sofía Arévalo",
-    restaurant: "Café & Brasa",
-    quote:
-      "No sé nada de sistemas, pero en una tarde ya tomábamos pedidos con Fogonería. El equipo nos acompañó en cada paso.",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Martín Cárdenas",
-    restaurant: "Pizzería La Nonna",
-    quote:
-      "Las mermas bajaron desde el primer mes porque por fin vemos qué sale y qué se pierde. La inversión se pagó sola.",
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: "Lucía Fernández",
-    restaurant: "Bistro 22",
-    quote:
-      "Con dos locales, necesitaba ver todo sin estar en todo. Desde mi celular reviso ventas, stock y cierres en tiempo real.",
-    rating: 5,
   },
 ];
 
@@ -158,7 +122,7 @@ export const nosotrosFeatures = [
   },
   {
     title: "Datos protegidos",
-    description: "Copias de seguridad y accesos por rol.",
+    description: "Accesos por usuario y datos bajo tu control.",
     icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
   },
   {
@@ -187,7 +151,7 @@ export const faqs = [
   },
   {
     q: "¿Mis datos están seguros?",
-    a: "Sí. Copias de seguridad automáticas y accesos por roles para tu equipo.",
+    a: "Sí. Accesos por usuario y datos tratados según nuestra política de privacidad.",
   },
   {
     q: "¿La cotización tiene algún costo?",

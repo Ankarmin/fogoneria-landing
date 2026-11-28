@@ -48,7 +48,7 @@ El formulario incluye consentimiento explícito para el tratamiento de datos y e
 ```text
 src/
   pages/
-    index.astro          # página principal (Hero → QuienesSomos → Funcionalidades → Reseñas → Cotizaciones → FAQ)
+    index.astro          # página principal (Hero → QuienesSomos → Funcionalidades → Cotizaciones → FAQ)
     api/cotizacion.ts    # endpoint serverless del formulario
     404.astro            # 404 con marca
     privacidad.astro     # política de privacidad del formulario
@@ -66,6 +66,6 @@ src/
 vercel.json              # headers de seguridad
 ```
 
-La página incluye canonical, Open Graph/Twitter, JSON-LD (`Organization` + `FAQPage`), skip link, temas claro/oscuro persistentes y movimiento reducido.
+La página incluye canonical, Open Graph/Twitter, JSON-LD (`Organization` + `FAQPage`), skip link, temas claro/oscuro persistentes y movimiento reducido. No se publican testimonios hasta tener reseñas reales con permiso.
 
 Las convenciones de código y contenido están en [`AGENTS.md`](./AGENTS.md).
