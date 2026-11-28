@@ -6,6 +6,7 @@ export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL("https://fogoneria-landing.vercel.app");
   const home = new URL("/", base).href;
   const privacy = new URL("/privacidad/", base).href;
+  const terms = new URL("/terminos/", base).href;
   const lastmod = new Date().toISOString().split("T")[0];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -18,6 +19,12 @@ export const GET: APIRoute = ({ site }) => {
   </url>
   <url>
     <loc>${privacy}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>${terms}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

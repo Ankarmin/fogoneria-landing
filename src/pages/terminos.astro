@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const updated = "28 de noviembre de 2026";
+---
+
+<BaseLayout
+  title="Términos y condiciones — Fogonería"
+  description="Condiciones del servicio de Fogonería para restaurantes."
+>
+  <main id="main-content" tabindex="-1" class="min-h-screen bg-surface dark:bg-black px-4 py-16 sm:py-24">
+    <article class="max-w-3xl mx-auto">
+      <a href="/" class="inline-flex min-h-11 items-center text-sm font-medium text-primary hover:text-primary-hover transition-colors">
+        ← Volver al inicio
+      </a>
+
+      <p class="mt-10 text-xs font-medium uppercase tracking-widest text-ink-400">Legal</p>
+      <h1 class="font-display uppercase text-section leading-tight tracking-display text-ink-900 dark:text-white mt-3 mb-3">
+        Términos y condiciones
+      </h1>
+      <p class="text-sm text-ink-600 dark:text-white/70 mb-6">Última actualización: {updated}.</p>
+      <p class="text-sm leading-relaxed text-ink-600 dark:text-white/70 mb-10">
+        Este documento resume las condiciones del servicio de Fogonería. La orden de servicio o el contrato firmado con el cliente prevalece sobre este resumen.
+      </p>
+
+      <div class="flex flex-col gap-8 text-sm leading-relaxed text-ink-600 dark:text-white/70">
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">1. Alcance</h2>
+          <p>Fogonería es un sistema de gestión para restaurantes: pedidos, cocina, inventario, caja, equipo y reportes. El acceso se otorga a la empresa contratante y a sus usuarios autorizados.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">2. Cotizaciones y planes</h2>
+          <p>Las cotizaciones son estimaciones. Los módulos, el alcance y los precios se confirman en la propuesta y la orden de servicio. Los importes se expresan en soles (PEN), salvo indicación contraria.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">3. Implementación</h2>
+          <p>La implementación incluye la configuración inicial de carta, turnos y sucursales según el plan contratado. El cliente se compromete a proporcionar información veraz y los accesos necesarios para la puesta en marcha.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">4. Pagos y cancelación</h2>
+          <p>Los pagos, la vigencia y la cancelación se rigen por la orden de servicio. La falta de pago puede suspender el acceso. Las devoluciones, si corresponden, se acuerdan en el contrato.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">5. Datos personales</h2>
+          <p>El tratamiento de datos se describe en la <a href="/privacidad/" class="underline underline-offset-2 hover:text-ink-900 dark:hover:text-white">política de privacidad</a>. El cliente es responsable de los datos de comensales y colaboradores que cargue en el sistema.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">6. Propiedad intelectual</h2>
+          <p>El software, la marca y la documentación son de Fogonería. El cliente conserva la titularidad de sus datos y contenidos.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">7. Disponibilidad y soporte</h2>
+          <p>Realizamos mantenimientos programados y no garantizamos disponibilidad ininterrumpida. El soporte se brinda por los canales acordados en la propuesta.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">8. Responsabilidad</h2>
+          <p>Dentro de lo permitido por ley, Fogonería no responde por lucro cesante ni daños indirectos. Nada en estos términos limita los derechos que la ley reconoce al consumidor.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">9. Ley aplicable</h2>
+          <p>Estos términos se rigen por las leyes de Perú. Las controversias se resuelven en Lima, salvo norma imperativa en contrario.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">10. Contacto</h2>
+          <p>Para consultas sobre estos términos, usa el formulario de cotizaciones.</p>
+        </section>
+      </div>
+    </article>
+  </main>
+</BaseLayout>

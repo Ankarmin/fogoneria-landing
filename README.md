@@ -48,10 +48,11 @@ El formulario incluye consentimiento explícito para el tratamiento de datos y e
 ```text
 src/
   pages/
-    index.astro          # página principal (Hero → QuienesSomos → Funcionalidades → Cotizaciones → FAQ)
+    index.astro          # página principal (Hero → QuienesSomos → Funcionalidades → TrustStrip → Cotizaciones → FAQ)
     api/cotizacion.ts    # endpoint serverless del formulario
     404.astro            # 404 con marca
     privacidad.astro     # política de privacidad del formulario
+    terminos.astro       # términos y condiciones del servicio
     sitemap.xml.ts       # sitemap estático generado desde Astro.site
     robots.txt.ts        # robots + sitemap
   components/

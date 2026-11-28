@@ -132,6 +132,12 @@ export const nosotrosFeatures = [
   },
 ];
 
+export const trustStats = [
+  { value: "6", label: "módulos conectados" },
+  { value: "1", label: "panel para pedidos, cocina, caja y equipo" },
+  { value: "100%", label: "en español, para restaurantes de Perú" },
+];
+
 export const faqs = [
   {
     q: "¿Qué es Fogonería?",
