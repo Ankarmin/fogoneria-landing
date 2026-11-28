@@ -1,6 +1,5 @@
 ---
 import SectionHeader from "../ui/SectionHeader.astro";
-import { ORIGIN_URLS } from "../../lib/site";
 
 const inputCls = "h-12 rounded-xl border border-field bg-white dark:bg-white/5 px-4 text-base sm:text-sm text-ink-900 dark:text-white placeholder:text-ink-400 dark:placeholder:text-white/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 w-full transition-colors";
 ---
@@ -19,8 +18,22 @@ const inputCls = "h-12 rounded-xl border border-field bg-white dark:bg-white/5 p
         align="left"
         display
         title="Cotiza tu sistema"
-        description="Cuéntanos de tu restaurante y te armamos una propuesta a medida: módulos, sucursales y puesta en marcha."
+        description="Cuéntanos cómo opera tu restaurante y te armamos una propuesta clara, sin compromiso."
       />
+      <ul class="mt-6 flex flex-col gap-3 text-sm leading-relaxed text-ink-600 dark:text-white/70">
+        <li class="flex items-start gap-3">
+          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
+          Demo guiada del sistema antes de decidir.
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
+          Propuesta con módulos, sucursales y puesta en marcha.
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>
+          Sin costo y con respuesta en menos de 24 horas.
+        </li>
+      </ul>
     </div>
 
     <div class="bg-white dark:bg-white/[0.06] rounded-2xl border border-primary/40 dark:border-white/15 p-4 sm:p-6 min-w-0">
@@ -68,7 +81,7 @@ const inputCls = "h-12 rounded-xl border border-field bg-white dark:bg-white/5 p
           />
           <div class="text-xs leading-relaxed text-ink-600 dark:text-white/60">
             <label for="cot-consent">Acepto el tratamiento de mis datos para recibir una cotización.</label>
-            <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="ml-1 underline underline-offset-2 hover:text-ink-900 dark:hover:text-white">Leer términos y política de privacidad</a>.
+            <a href="/privacidad/" target="_blank" rel="noopener noreferrer" class="ml-1 underline underline-offset-2 hover:text-ink-900 dark:hover:text-white">Leer política de privacidad<span class="sr-only"> (abre en una pestaña nueva)</span></a>.
           </div>
         </div>
         <div class="sm:col-span-2 flex flex-col gap-3 mt-2">

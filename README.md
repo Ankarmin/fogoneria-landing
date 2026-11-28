@@ -41,7 +41,7 @@ Copiá `.env.example` a `.env` para desarrollo. En producción, configurá las m
 
 El formulario incluye consentimiento explícito para el tratamiento de datos y envía JSON a `/api/cotizacion`; el endpoint valida los campos y el consentimiento, aplica límites de tamaño, honeypot y un rate limit best-effort, y manda un correo HTML + texto plano con `reply_to` al prospecto.
 
-> El footer no publica email ni teléfono placeholders. El canal de contacto es el formulario; si agregás datos reales, centralizalos en `src/lib/site.ts` y verificá que el dominio tenga MX.
+> El footer no publica email ni teléfono placeholders. El canal de contacto es el formulario; si agregás datos reales, centralizalos en `src/lib/site.ts` y verificá que el dominio tenga MX. La política de privacidad vive en `/privacidad`; revisá el responsable/RUC con asesoría legal antes de publicar.
 
 ## Estructura
 
@@ -51,6 +51,7 @@ src/
     index.astro          # página principal (Hero → QuienesSomos → Funcionalidades → Reseñas → Cotizaciones → FAQ)
     api/cotizacion.ts    # endpoint serverless del formulario
     404.astro            # 404 con marca
+    privacidad.astro     # política de privacidad del formulario
     sitemap.xml.ts       # sitemap estático generado desde Astro.site
     robots.txt.ts        # robots + sitemap
   components/

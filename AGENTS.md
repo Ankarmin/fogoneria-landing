@@ -18,7 +18,7 @@ No test / lint / typecheck scripts, no CI workflows. Verify with `pnpm build`.
 
 ## Structure
 
-- `src/pages/index.astro` — main page; section order: Hero → QuienesSomos → Funcionalidades → Testimonials (#reviews) → Cotizaciones → Faq. `src/pages/404.astro` — branded 404.
+- `src/pages/index.astro` — main page; section order: Hero → QuienesSomos → Funcionalidades → Testimonials (#reviews) → Cotizaciones → Faq. `src/pages/404.astro` — branded 404. `src/pages/privacidad.astro` — privacy notice linked from the form consent and footer.
 - `src/pages/api/cotizacion.ts` — `POST` endpoint (`prerender = false`) that validates the quote form + consent and sends the email through Resend.
 - `src/pages/sitemap.xml.ts` / `src/pages/robots.txt.ts` — static SEO routes generated from `Astro.site`.
 - `src/components/landing/` — page sections (Hero, QuienesSomos, Funcionalidades, Testimonials, Cotizaciones, Faq); `layout/` — Navbar, Footer; `ui/` — Button, Card, SectionHeader, ThemeToggle, SectionDivider (1px faded-ends hairline between sections), DeviceMockup (CSS-only laptop/phone; renders the real screenshot via `<Image>` or the watermark fallback when no image is passed).
@@ -31,7 +31,7 @@ No test / lint / typecheck scripts, no CI workflows. Verify with `pnpm build`.
 - Styling: use theme tokens (`bg-surface`, `text-ink-900/600/400`, `bg-primary`/`hover:bg-primary-hover`, `text-on-primary`, `border-field`, `text-danger`, `bg-success`, `text-xs/nav/sm/section`) — never hardcode palette hex, font sizes, or weights outside `globals.css`. Only `font-normal` (400) / `font-medium` (500). Exception: form controls use `text-base sm:text-sm` (16px on mobile) to avoid iOS zoom.
 - Dark mode: `.dark` class on `<html>` + `localStorage fogoneria:theme`, set by inline pre-hydration script in `BaseLayout.astro`. Keep the `ThemeToggle.astro` + script pattern; don't switch to `prefers-color-scheme`-only or `class="dark"` on body.
 - Content: edit copy/data in `src/lib/landing.ts` and `src/lib/site.ts`, not inside section components. FAQs and `nosotrosFeatures` live in `landing.ts`.
-- Outbound links: landing has no auth/onboarding logic — always link via `ORIGIN_URLS` from `src/lib/site.ts`. Override origin with `PUBLIC_ORIGIN_URL` env (dev default `http://localhost:3000`; prod default `https://fogoneria-system.vercel.app`); never hardcode `localhost:3000` URLs in components. `Ver demo` links to `ORIGIN_URLS.demo("criolla")`.
+- Outbound links: landing has no auth/onboarding logic — always link via `ORIGIN_URLS` from `src/lib/site.ts`. Override origin with `PUBLIC_ORIGIN_URL` env (dev default `http://localhost:3000`; prod default `https://fogoneria-system.vercel.app`); never hardcode `localhost:3000` URLs in components. The hero CTA “Solicitar demo” goes to `#cotizaciones`; no old website-demo links.
 - Contact data: the footer intentionally has no placeholder email/phone; the quote form is the contact channel. If real NAP data is provided, centralize it in `site.ts` and verify the domain has MX before publishing.
 - Astro config: Tailwind is wired via `@tailwindcss/vite` in `astro.config.mjs` — keep it there, don't add a Tailwind config file or PostCSS setup.
 - Fonts: `@fontsource-variable/inter` + `@fontsource/oswald/600` (display only via `.font-display`) imported in `globals.css`; font stack is SF Pro → Inter Variable fallback — don't add webfont links (fontsource npm packages are OK).

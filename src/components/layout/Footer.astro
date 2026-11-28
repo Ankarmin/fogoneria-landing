@@ -48,6 +48,7 @@ import { heroHud } from "../../lib/landing";
           <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Cotiza tu sistema</a></li>
           <li><a href={ORIGIN_URLS.home} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Ir al sistema</a></li>
           <li><a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Términos y condiciones</a></li>
+          <li><a href="/privacidad/" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Política de privacidad</a></li>
         </ul>
       </div>
     </div>
@@ -56,7 +57,10 @@ import { heroHud } from "../../lib/landing";
       <div class="text-xs text-ink-400 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
         <span>© {new Date().getFullYear()} Fogonería. Todos los derechos reservados.</span>
         <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors">
-          Políticas, términos y condiciones
+          Términos y condiciones
+        </a>
+        <a href="/privacidad/" class="hover:text-ink-900 dark:hover:text-white transition-colors">
+          Política de privacidad
         </a>
       </div>
     </div>
