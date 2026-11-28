@@ -72,6 +72,9 @@ const { id, class: className = "" } = Astro.props;
         isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro",
       );
     });
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", isDark ? "#141210" : "#c13614");
   }
 
   function toggleTheme() {

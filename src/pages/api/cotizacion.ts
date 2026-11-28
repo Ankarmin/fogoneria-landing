@@ -20,6 +20,7 @@ const FIELD_LIMITS = {
 
 const MAX_BODY_BYTES = 8_000;
 const RESEND_TIMEOUT_MS = 8_000;
+const PRIVACY_VERSION = "2026-11-28";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_ADDRESS_RE = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
 
@@ -120,6 +121,7 @@ function buildEmailHtml(params: {
   sucursalesLabel: string;
   fechaLima: string;
   waLink: string;
+  privacyVersion: string;
 }): string {
   const {
     nombreCompleto,
@@ -129,6 +131,7 @@ function buildEmailHtml(params: {
     sucursalesLabel,
     fechaLima,
     waLink,
+    privacyVersion,
   } = params;
 
   return `<!DOCTYPE html>
@@ -264,6 +267,9 @@ function buildEmailHtml(params: {
               <td style="background-color:#faf6f0;border-top:1px solid #efe7de;padding:16px 28px;text-align:center;">
                 <p style="margin:0;font-size:12px;color:#8a8783;">
                   Este mensaje fue generado automáticamente desde el formulario de cotizaciones de Fogonería.
+                </p>
+                <p style="margin:6px 0 0;font-size:12px;color:#8a8783;">
+                  Consentimiento aceptado · Política de privacidad v${privacyVersion}.
                 </p>
               </td>
             </tr>
@@ -438,6 +444,7 @@ export const POST: APIRoute = async ({ request }) => {
     sucursalesLabel,
     fechaLima,
     waLink,
+    privacyVersion: PRIVACY_VERSION,
   });
 
   const text = [
@@ -449,6 +456,7 @@ export const POST: APIRoute = async ({ request }) => {
     `Email: ${email}`,
     `Teléfono: ${telefono}`,
     `Fecha: ${fechaLima}`,
+    `Consentimiento: aceptado (política de privacidad v${PRIVACY_VERSION})`,
   ].join("\n");
 
   let resendResponse: Response;
