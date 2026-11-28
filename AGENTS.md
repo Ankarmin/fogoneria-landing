@@ -18,11 +18,11 @@ No test / lint / typecheck scripts, no CI workflows. Verify with `pnpm build`.
 
 ## Structure
 
-- `src/pages/index.astro` — main page; section order: Hero → QuienesSomos → Funcionalidades → Cotizaciones → Faq. `src/pages/404.astro` — branded 404. `src/pages/privacidad.astro` — privacy notice linked from the form consent and footer.
+- `src/pages/index.astro` — main page; section order: Hero → QuienesSomos → Funcionalidades → TrustStrip → Cotizaciones → Faq. `src/pages/404.astro` — branded 404. `src/pages/privacidad.astro` — privacy notice linked from the form consent and footer. `src/pages/terminos.astro` — service terms linked from the footer.
 - `src/pages/api/cotizacion.ts` — `POST` endpoint (`prerender = false`) that validates the quote form + consent and sends the email through Resend.
 - `src/pages/sitemap.xml.ts` / `src/pages/robots.txt.ts` — static SEO routes generated from `Astro.site`.
-- `src/components/landing/` — page sections (Hero, QuienesSomos, Funcionalidades, Cotizaciones, Faq); `layout/` — Navbar, Footer; `ui/` — Button, Card, SectionHeader, ThemeToggle, SectionDivider (1px faded-ends hairline between sections), DeviceMockup (CSS-only laptop/phone; renders the real screenshot via `<Image>` or the watermark fallback when no image is passed).
-- `src/lib/` — single source of truth: `site.ts` (outbound URLs), `landing.ts` (faqs, funcionalidades, nosotrosFeatures, heroHud), `cn.ts` (`twMerge`-based `cn`, no `clsx`).
+- `src/components/landing/` — page sections (Hero, QuienesSomos, Funcionalidades, TrustStrip, Cotizaciones, Faq); `layout/` — Navbar, Footer; `ui/` — Button, Card, SectionHeader, ThemeToggle, SectionDivider (1px faded-ends hairline between sections), DeviceMockup (CSS-only laptop/phone; renders the real screenshot via `<Image>` or the watermark fallback when no image is passed).
+- `src/lib/` — single source of truth: `site.ts` (outbound URLs), `landing.ts` (faqs, funcionalidades, nosotrosFeatures, trustStats, heroHud), `cn.ts` (`twMerge`-based `cn`, no `clsx`).
 - `src/assets/` — images imported in code (Astro-optimized); `public/` — only favicons (`favicon.svg`, `favicon.png`, `favicon.ico`, `apple-touch-icon.png`) served verbatim.
 - `src/styles/globals.css` — Tailwind v4 (`@import "tailwindcss" source(none)`, `@source "../**/*.{astro,ts,js}"`, `@theme`, `@custom-variant`); no `tailwind.config`. The restricted source keeps `.agents/` and docs out of the CSS.
 

@@ -46,7 +46,7 @@ import { heroHud } from "../../lib/landing";
         <ul class="flex flex-col gap-1 text-nav text-ink-600 dark:text-white/60">
           <li><a href="#cotizaciones" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Cotiza tu sistema</a></li>
           <li><a href={ORIGIN_URLS.home} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Ir al sistema<span class="sr-only"> (abre en una pestaña nueva)</span></a></li>
-          <li><a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Términos y condiciones<span class="sr-only"> (abre en una pestaña nueva)</span></a></li>
+          <li><a href="/terminos/" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Términos y condiciones</a></li>
           <li><a href="/privacidad/" class="hover:text-ink-900 dark:hover:text-white transition-colors inline-flex items-center py-2.5 min-h-11">Política de privacidad</a></li>
         </ul>
       </div>
@@ -55,8 +55,8 @@ import { heroHud } from "../../lib/landing";
     <div class="pt-6 border-t border-ink-900/10 dark:border-white/10 flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
       <div class="text-xs text-ink-600 flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
         <span>© {new Date().getFullYear()} Fogonería. Todos los derechos reservados.</span>
-        <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center hover:text-ink-900 dark:hover:text-white transition-colors">
-          Términos y condiciones<span class="sr-only"> (abre en una pestaña nueva)</span>
+        <a href="/terminos/" class="inline-flex min-h-11 items-center hover:text-ink-900 dark:hover:text-white transition-colors">
+          Términos y condiciones
         </a>
         <a href="/privacidad/" class="inline-flex min-h-11 items-center hover:text-ink-900 dark:hover:text-white transition-colors">
           Política de privacidad

@@ -10,5 +10,4 @@ export const ORIGIN =
 
 export const ORIGIN_URLS = {
   home: `${ORIGIN}/`,
-  terminos: `${ORIGIN}/terminos`,
 } as const;

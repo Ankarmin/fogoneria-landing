@@ -1,0 +1,17 @@
+---
+import { trustStats } from "../../lib/landing";
+---
+
+<section
+  aria-label="Fogonería en números"
+  class="border-y border-ink-900/10 dark:border-white/10 bg-gradient-to-b from-surface to-primary/[0.06] dark:from-black dark:to-persimmon-950/20 py-10 sm:py-12"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+    {trustStats.map((stat) => (
+      <div>
+        <p class="font-display uppercase text-display-sm leading-none text-primary">{stat.value}</p>
+        <p class="mt-2 text-sm leading-relaxed text-ink-600 dark:text-white/70">{stat.label}</p>
+      </div>
+    ))}
+  </div>
+</section>
