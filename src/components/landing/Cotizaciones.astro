@@ -2,10 +2,10 @@
 import SectionHeader from "../ui/SectionHeader.astro";
 import { ORIGIN_URLS } from "../../lib/site";
 
-const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 bg-white dark:bg-white/5 px-4 text-sm text-ink-900 dark:text-white placeholder:text-ink-400 dark:placeholder:text-white/40 focus:border-primary focus:outline-none w-full transition-colors";
+const inputCls = "h-12 rounded-xl border border-field bg-white dark:bg-white/5 px-4 text-base sm:text-sm text-ink-900 dark:text-white placeholder:text-ink-400 dark:placeholder:text-white/60 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 w-full transition-colors";
 ---
 
-<section id="cotizaciones" class="py-16 sm:py-24 bg-gradient-to-b from-primary/[0.14] via-primary/[0.12] to-surface dark:from-black dark:via-black dark:to-persimmon-950/60 relative overflow-hidden scroll-mt-16">
+<section id="cotizaciones" class="py-16 sm:py-24 bg-gradient-to-b from-primary/[0.10] via-primary/[0.12] to-surface dark:from-black dark:via-black dark:to-persimmon-950/60 relative overflow-hidden scroll-mt-16">
   <div class="absolute inset-4 sm:inset-6 z-10 hidden md:block pointer-events-none" aria-hidden="true">
     <span class="absolute top-0 left-0 w-6 h-6 border-t border-l border-ink-900/20 dark:border-white/30"></span>
     <span class="absolute top-0 right-0 w-6 h-6 border-t border-r border-ink-900/20 dark:border-white/30"></span>
@@ -24,7 +24,7 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
     </div>
 
     <div class="bg-white dark:bg-white/[0.06] rounded-2xl border border-primary/40 dark:border-white/15 p-4 sm:p-6 min-w-0">
-      <form id="cotizacion-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <form id="cotizacion-form" method="post" action="/api/cotizacion" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="hidden">
           <label for="cot-website">No completar este campo</label>
           <input id="cot-website" name="website" type="text" tabindex="-1" autocomplete="off" />
@@ -58,20 +58,29 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
             <option value="4+">4 o más locales</option>
           </select>
         </div>
+        <div class="sm:col-span-2 flex items-start gap-3">
+          <input
+            id="cot-consent"
+            name="consent"
+            type="checkbox"
+            required
+            class="mt-0.5 h-4 w-4 shrink-0 rounded border-field accent-primary"
+          />
+          <div class="text-xs leading-relaxed text-ink-600 dark:text-white/60">
+            <label for="cot-consent">Acepto el tratamiento de mis datos para recibir una cotización.</label>
+            <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="ml-1 underline underline-offset-2 hover:text-ink-900 dark:hover:text-white">Leer términos y política de privacidad</a>.
+          </div>
+        </div>
         <div class="sm:col-span-2 flex flex-col gap-3 mt-2">
-          <p id="cotizacion-error" role="alert" class="hidden text-xs font-medium text-primary text-center"></p>
-          <button id="cotizacion-submit" type="submit" class="bg-primary text-white hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
+          <p id="cotizacion-error" role="alert" class="hidden text-xs font-medium text-danger text-center"></p>
+          <button id="cotizacion-submit" type="submit" class="bg-primary text-on-primary hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed rounded-full px-5 h-10 min-h-11 w-full inline-flex items-center justify-center text-sm font-medium transition-all cursor-pointer">
             Solicitar cotización
           </button>
-          <p class="text-xs text-ink-400 dark:text-white/40 text-center">Sin compromiso. Te contactamos en menos de 24 horas.</p>
-          <p class="text-xs text-ink-400 dark:text-white/40 text-center">
-            Al enviar aceptas nuestros
-            <a href={ORIGIN_URLS.terminos} target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-ink-600 dark:hover:text-white/60">términos y política de privacidad</a>.
-          </p>
+          <p class="text-xs text-ink-600 dark:text-white/60 text-center">Sin compromiso. Te contactamos en menos de 24 horas.</p>
         </div>
       </form>
       <div id="cotizacion-exito" class="hidden text-center py-8" aria-live="polite" tabindex="-1">
-        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4">
+        <div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center mx-auto mb-4">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
         </div>
         <p class="text-sm font-medium text-ink-900 dark:text-white mb-2">¡Gracias! Te contactaremos en menos de 24 horas.</p>
@@ -108,6 +117,7 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
         email: String(formData.get("email") ?? "").trim(),
         negocio: String(formData.get("negocio") ?? "").trim(),
         sucursales: String(formData.get("sucursales") ?? "").trim(),
+        consent: formData.get("consent") === "on",
         website: String(formData.get("website") ?? "").trim(),
       };
 
@@ -147,6 +157,7 @@ const inputCls = "h-12 rounded-xl border border-ink-900/15 dark:border-white/15 
         submitBtn.disabled = false;
         submitBtn.textContent = defaultLabel;
         form.removeAttribute("aria-busy");
+        if (document.activeElement === document.body) submitBtn.focus();
       }
     });
   }

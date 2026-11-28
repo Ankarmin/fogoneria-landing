@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Página no encontrada — Fogonería"
+  description="La página que buscas no existe. Vuelve al inicio de Fogonería."
+>
+  <main id="main-content" tabindex="-1" class="min-h-screen flex items-center justify-center bg-surface dark:bg-black px-4 py-16">
+    <div class="max-w-md w-full text-center">
+      <p class="font-display uppercase text-primary text-display-sm leading-none mb-4">404</p>
+      <h1 class="font-display uppercase text-ink-900 dark:text-white text-display-sm leading-display tracking-display text-balance mb-4">
+        Esta página no existe
+      </h1>
+      <p class="text-sm leading-relaxed text-ink-600 dark:text-white/70 mb-8">
+        Puede que el enlace esté roto o que la página se haya movido. Vuelve al inicio para seguir conociendo Fogonería.
+      </p>
+      <a href="/" class="bg-primary text-on-primary rounded-full px-5 h-10 min-h-11 inline-flex items-center justify-center text-sm font-medium hover:bg-primary-hover transition-colors">
+        Volver al inicio
+      </a>
+    </div>
+  </main>
+</BaseLayout>

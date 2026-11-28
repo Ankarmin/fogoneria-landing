@@ -1,5 +1,7 @@
 ---
 import "../styles/globals.css";
+import { getImage } from "astro:assets";
+import heroOg from "../assets/hero-fogoneria.jpg";
 
 interface Props {
   title?: string;
@@ -7,32 +9,78 @@ interface Props {
 }
 
 const {
-  title = "Fogonería — El lugar donde cocinamos tu negocio",
-  description = "Creamos, alojamos y mantenemos tu sitio web y carta digital mientras tú te enfocas en cocinar.",
+  title = "Fogonería — Sistema de gestión para restaurantes",
+  description = "Pedidos, cocina, inventario, caja y reportes en un solo sistema. Fogonería ordena la operación de tu restaurante para que te enfoques en cocinar.",
 } = Astro.props;
+
+const site = Astro.site ?? new URL("https://fogoneria-landing.vercel.app");
+const canonical = new URL(Astro.url.pathname, site);
+const ogImage = await getImage({
+  src: heroOg,
+  width: 1200,
+  height: 630,
+  fit: "cover",
+  format: "jpeg",
+  quality: 82,
+});
+const ogImageUrl = new URL(ogImage.src, site);
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Fogonería",
+  url: site.href,
+  logo: new URL("/apple-touch-icon.png", site).href,
+  description,
+};
 
 const themeScript = `(function(){try{var t=localStorage.getItem('fogoneria:theme');if(t==='dark'){document.documentElement.classList.add('dark')}else if(t==='light'){document.documentElement.classList.remove('dark')}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark')}}catch(e){}})();`;
 ---
 
 <!doctype html>
-<html lang="es" class="h-full antialiased">
+<html lang="es-PE" class="h-full antialiased">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="description" content={description} />
+    <style is:inline>html{background:#fffdf9}html.dark{background:#141210}</style>
+    <link rel="canonical" href={canonical.href} />
+
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Fogonería" />
+    <meta property="og:locale" content="es_PE" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Salón de restaurante de noche" />
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl.href} />
+    <meta name="twitter:image:alt" content="Salón de restaurante de noche" />
+
+    <meta name="theme-color" content="#c13614" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <script is:inline set:html={themeScript} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
   </head>
   <body class="min-h-full flex flex-col">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-on-primary"
+    >
+      Saltar al contenido
+    </a>
     <slot />
   </body>
 </html>

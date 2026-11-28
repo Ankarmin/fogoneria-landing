@@ -19,7 +19,7 @@ const FIELD_LIMITS = {
 } as const;
 
 const MAX_BODY_BYTES = 8_000;
-const RESEND_TIMEOUT_MS = 10_000;
+const RESEND_TIMEOUT_MS = 8_000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const EMAIL_ADDRESS_RE = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
 
@@ -276,17 +276,6 @@ function buildEmailHtml(params: {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  if (isRateLimited(clientIp(request))) {
-    return jsonResponse(
-      {
-        ok: false,
-        error: "Recibimos varias solicitudes seguidas. Intenta nuevamente en unos minutos.",
-      },
-      429,
-      { "Retry-After": String(Math.ceil(RATE_LIMIT_WINDOW_MS / 1000)) },
-    );
-  }
-
   const apiKey = normalizeEnv(
     process.env.RESEND_API_KEY ?? import.meta.env.RESEND_API_KEY,
   );
@@ -406,6 +395,29 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
+  if (data.consent !== true) {
+    return jsonResponse(
+      {
+        ok: false,
+        error: "Debes aceptar el tratamiento de tus datos para enviar la solicitud.",
+      },
+      400,
+    );
+  }
+
+  // Only valid submissions consume the quota, so a user fixing validation
+  // errors is not locked out.
+  if (isRateLimited(clientIp(request))) {
+    return jsonResponse(
+      {
+        ok: false,
+        error: "Recibimos varias solicitudes seguidas. Intenta nuevamente en unos minutos.",
+      },
+      429,
+      { "Retry-After": String(Math.ceil(RATE_LIMIT_WINDOW_MS / 1000)) },
+    );
+  }
+
   const sucursales = sucursalesRaw as SucursalKey;
   const sucursalesLabel = SUCURSALES[sucursales];
   const nombreCompleto = `${nombre} ${apellido}`;
@@ -489,7 +501,12 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 export const ALL: APIRoute = () =>
-  new Response(null, {
+  new Response(JSON.stringify({ ok: false, error: "Método no permitido." }), {
     status: 405,
-    headers: { Allow: "POST", "Cache-Control": "no-store" },
+    headers: {
+      Allow: "POST",
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff",
+    },
   });

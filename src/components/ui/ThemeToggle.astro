@@ -23,7 +23,7 @@ const { id, class: className = "" } = Astro.props;
   data-theme-toggle
   id={id}
   aria-label="Cambiar a modo oscuro"
-  class={cn("p-2 text-ink-400 hover:text-ink-900 hover:bg-primary-hover/[0.05] rounded-full transition-colors cursor-pointer", className)}
+  class={cn("inline-flex min-h-11 min-w-11 items-center justify-center p-2 text-ink-400 hover:text-ink-900 hover:bg-primary-hover/[0.05] rounded-full transition-colors cursor-pointer", className)}
 >
   <svg
     class="icon-moon dark:hidden"
