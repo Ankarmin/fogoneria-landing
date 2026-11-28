@@ -135,13 +135,21 @@ body {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-50%);
+    /* Compensa el medio gap que falta al duplicar 4 tarjetas. */
+    transform: translateX(calc(-50% - var(--marquee-gap) / 2));
   }
 }
 
 .animate-marquee {
+  --marquee-gap: 0.75rem;
   animation: marquee 35s linear infinite;
   width: max-content;
+}
+
+@media (min-width: 640px) {
+  .animate-marquee {
+    --marquee-gap: 1rem;
+  }
 }
 
 .animate-marquee:hover,

@@ -10,7 +10,5 @@ export const ORIGIN =
 
 export const ORIGIN_URLS = {
   home: `${ORIGIN}/`,
-  onboarding: `${ORIGIN}/onboarding`,
   terminos: `${ORIGIN}/terminos`,
-  demo: (id: "criolla" | "postres" | "cafe") => `${ORIGIN}/demo/${id}`,
 } as const;

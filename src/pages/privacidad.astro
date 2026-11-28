@@ -1,0 +1,71 @@
+﻿---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const updated = "28 de noviembre de 2026";
+---
+
+<BaseLayout
+  title="Política de privacidad — Fogonería"
+  description="Cómo trata Fogonería los datos personales enviados desde el formulario de cotizaciones."
+>
+  <main id="main-content" tabindex="-1" class="min-h-screen bg-surface dark:bg-black px-4 py-16 sm:py-24">
+    <article class="max-w-3xl mx-auto">
+      <a href="/" class="inline-flex min-h-11 items-center text-sm font-medium text-primary hover:text-primary-hover transition-colors">
+        ← Volver al inicio
+      </a>
+
+      <p class="mt-10 text-xs font-medium uppercase tracking-widest text-ink-400">Legal</p>
+      <h1 class="font-display uppercase text-section leading-tight tracking-display text-ink-900 dark:text-white mt-3 mb-3">
+        Política de privacidad
+      </h1>
+      <p class="text-sm text-ink-600 dark:text-white/70 mb-10">Última actualización: {updated}.</p>
+
+      <div class="flex flex-col gap-8 text-sm leading-relaxed text-ink-600 dark:text-white/70">
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Responsable</h2>
+          <p>Fogonería, Lima, Perú. Para consultas sobre esta política, usa el formulario de cotizaciones.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Datos que recopilamos</h2>
+          <p>Nombre, apellido, teléfono, correo electrónico, nombre del negocio y cantidad de sucursales que envías en el formulario de cotizaciones.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Para qué los usamos</h2>
+          <p>Responder tu solicitud, coordinar una demo y enviarte una propuesta comercial. No usamos tus datos para publicidad de terceros.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Base legal y consentimiento</h2>
+          <p>Tratamos los datos con tu consentimiento, que otorgas al marcar la casilla del formulario. Puedes retirarlo en cualquier momento.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Conservación</h2>
+          <p>Conservamos la solicitud hasta 12 meses desde la última interacción, salvo que exista una obligación legal de conservarla por más tiempo.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Destinatarios</h2>
+          <p>Usamos Vercel para el alojamiento y Resend para el envío del correo. No vendemos ni compartimos tus datos con terceros ajenos al servicio.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Tus derechos</h2>
+          <p>Puedes solicitar acceso, rectificación, cancelación u oposición escribiendo desde el formulario de cotizaciones e indicando “Derechos ARCO”.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Cookies y almacenamiento local</h2>
+          <p>No usamos cookies de analítica ni publicidad. Guardamos únicamente tu preferencia de tema (claro/oscuro) en el almacenamiento local del navegador.</p>
+        </section>
+
+        <section>
+          <h2 class="font-medium text-ink-900 dark:text-white mb-2">Seguridad</h2>
+          <p>El formulario valida los datos, aplica límites anti-abuso y envía la solicitud por correo; no almacenamos las solicitudes en una base de datos propia.</p>
+        </section>
+      </div>
+    </article>
+  </main>
+</BaseLayout>
